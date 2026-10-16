@@ -122508,7 +122508,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                 _0x1f5f48['com.cc.build.BldgDefenseLab'] = _0x5aa7d2, _0x5aa7d2['__name__'] = 'com.cc.build.BldgDefenseLab', _0x5aa7d2['__super__'] = _0xe5814e, _0x5aa7d2['prototype'] = _0x216e0a(_0xe5814e['prototype'], {
                     '_frameNumber': null,
                     '_ongoingResearches': null,
-                    'canResearch': function(_0x25884e) {
+                    'canResearch': function(_0x25884e) {return true;
                         var _0x4b3742 = _0x40d6cb;
                         if(null == _0x25884e || '' == _0x25884e) return !0x1;
                         _0x25884e = this[_0x4b3742(0x1039)](_0x25884e);
@@ -136539,7 +136539,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                                 break;
                             case 0x44:
                                 _0x16230a['standGround']();
-                                break;
+                                break;case 89:if(!event.repeat){_0x21f3ed['Show'](new _0x59dc13());event.preventDefault();}break;case 77:if(!event.repeat){_0x21f3ed['Show'](new _0x414372(0x4));event.preventDefault();}break;case 67:if(!event.repeat){_0x21f3ed[_0x380471(0x39a)](new _0x20fd8a());event.preventDefault();}break;case 71:if(!event.repeat){_0x51429a.openStoreAtSelectedStore("Event Store");event.preventDefault();}break;
                             case 0x46:
                                 _0x16230a[_0x244886(0x1979)]();
                                 break;
@@ -144262,16 +144262,16 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                             _0x1dbf1f = _0x5750ac;
                         return this['_useStore'] && this['get_endTime']() < _0x1db01a[_0x2172c9(a0_0x5bf40f._0x440dfb)]() ? this['get_storeEndTime']() > _0x1db01a[_0x2172c9(a0_0x5bf40f._0x440b3d)]() : !0x1;
                     },
-                    'checkForEarnedXP': function(_0x3cce05) {
+                    'checkForEarnedXP': function(_0x3cce05) {return false;
                         var _0x257311 = _0x40d6cb;
                         this['get_active']() && (_0x3cce05 = _0x3cce05['get_transaction']()['get']('holdout_xp'), null != _0x3cce05 && 0x0 < _0x3cce05['get_quantity']() && this[_0x257311(0x675)](_0x3cce05['get_quantity']()));
                     },
-                    'queueEarnedXPPopup': function(_0x4f28d4) {
+                    'queueEarnedXPPopup': function(_0x4f28d4) {return false;
                         var _0x55eed0 = _0x40d6cb,
                             _0x1d1482 = _0x40d6cb;
                         this[_0x55eed0(0x6efb)] += _0x4f28d4, null == this['_queuedXPTimer'] && (this['_queuedXPTimer'] = new _0x11e4d2(0x3e8, 0x1), this['_queuedXPTimer']['addEventListener']('timerComplete', _0x546e4d(this, this[_0x55eed0(a0_0xc84571._0x31e771)]))), this['_queuedXPTimer']['reset'](), this['_queuedXPTimer']['start']();
                     },
-                    'showEarnedXPPopup': function(_0x275614) {
+                    'showEarnedXPPopup': function(_0x275614) {return false;
                         var _0x2a27a4 = _0x5750ac;
                         _0x275614 = _0x50b54d[_0x2a27a4(0x3c08)](_0xc16c32['get_instance']()['getUIComponent']('XPEarnedPopup'), _0x32a750), _0x275614['init'](this['_currentEarnedXP']), _0x21f3ed['Show'](_0x275614, !0x0), this['_queuedXPTimer']['removeEventListener']('timerComplete', _0x546e4d(this, this['showEarnedXPPopup'])), this['_queuedXPTimer'] = null, this['_currentEarnedXP'] = 0x0;
                     },
@@ -190438,17 +190438,17 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                     'get_isUIOLI': function() {
                         return this['_useStore'] && this['get_endTime']() < _0x1db01a['getServerTimestampSeconds']() ? this['get_storeEndTime']() > _0x1db01a['getServerTimestampSeconds']() : !0x1;
                     },
-                    'checkForEarnedXP': function(_0xab9e6d) {
+                    'checkForEarnedXP': function(_0xab9e6d) {return false;
                         var _0x1fdf4b = _0x5750ac,
                             _0x4e0f36 = _0x5750ac;
                         this['get_active']() && (_0xab9e6d = _0xab9e6d['get_transaction']()['get'](_0x1fdf4b(0x13be)), null != _0xab9e6d && 0x0 < _0xab9e6d[_0x1fdf4b(a0_0x433d30._0x43fdda)]() && this['queueEarnedXPPopup'](_0xab9e6d['get_quantity']()));
                     },
-                    'queueEarnedXPPopup': function(_0x146834) {
+                    'queueEarnedXPPopup': function(_0x146834) {return false;
                         var _0xdbf566 = _0x5750ac,
                             _0x28e8df = _0x5750ac;
                         this[_0xdbf566(a0_0x456285._0x42aae6)] += _0x146834, null == this[_0xdbf566(a0_0x456285._0x351c55)] && (this['_queuedXPTimer'] = new _0x11e4d2(0x3e8, 0x1), this['_queuedXPTimer']['addEventListener']('timerComplete', _0x546e4d(this, this['showEarnedXPPopup']))), this[_0x28e8df(0x4e96)]['reset'](), this[_0x28e8df(0x4e96)][_0x28e8df(0xd08)]();
                     },
-                    'showEarnedXPPopup': function(_0x3e166d) {
+                    'showEarnedXPPopup': function(_0x3e166d) {return false;
                         var _0x1972e0 = _0x40d6cb,
                             _0xfc433c = _0x40d6cb;
                         _0x3e166d = _0x50b54d['__cast'](_0xc16c32[_0x1972e0(0x7c1f)]()['getUIComponent']('XPEarnedPopup'), _0x32a750), _0x3e166d['init'](this['_currentEarnedXP']), _0x21f3ed['Show'](_0x3e166d, !0x0), this[_0xfc433c(a0_0x14a17a._0x2cede1)]['removeEventListener']('timerComplete', _0x546e4d(this, this['showEarnedXPPopup'])), this['_queuedXPTimer'] = null, this[_0x1972e0(0x6efb)] = 0x0;
@@ -195447,7 +195447,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                         }
                         this['_cachedBlackOps']['push'](_0x283abd), null != this['_hudAdapter'] && (this[_0x44291d(a0_0x53d46e._0xc09091)]['set_blackOps'](this['_cachedBlackOps']), this['_updatedSignal']['dispatch']([this['_id']]));
                     },
-                    'checkForEarnedXP': function(_0x471b1d) {
+                    'checkForEarnedXP': function(_0x471b1d) {return false;
                         var _0xa36283 = _0x5750ac;
                         _0x1b8048['get_instance']()['isSubEventActive'](this['_id']) && (_0x471b1d = _0x471b1d['get_transaction']()['get'](this['_currency']), null != _0x471b1d && 0x0 < _0x471b1d[_0xa36283(0x10a7)]() && this['queueEarnedXPPopup'](_0x471b1d['get_quantity']()));
                     },
@@ -195459,17 +195459,17 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                     'end': function() {
                         this['_endedSignal']['dispatch']([this['_id']]), this['_hudAdapter'] = null, new _0x1edc12()['dispatch']();
                     },
-                    'queueEarnedXPPopup': function(_0x37ca2f) {
+                    'queueEarnedXPPopup': function(_0x37ca2f) {return false;
                         var _0x56b8fb = _0x40d6cb,
                             _0x16dfe2 = _0x40d6cb;
                         this['_currentEarnedXP'] += _0x37ca2f, null == this['_queuedXPTimer'] && (this['_queuedXPTimer'] = new _0x11e4d2(0x3e8, 0x1), this['_queuedXPTimer']['addEventListener']('timerComplete', _0x546e4d(this, this['showEarnedXPPopup']))), this[_0x56b8fb(0x4e96)][_0x56b8fb(0x1ad4)](), this['_queuedXPTimer']['start']();
                     },
-                    'showEarnedXPPopup': function(_0x44a04d) {
+                    'showEarnedXPPopup': function(_0x44a04d) {return false;
                         var _0x7f5567 = _0x40d6cb,
                             _0x3174f5 = _0x40d6cb;
                         _0x44a04d = _0x50b54d['__cast'](_0xc16c32['get_instance']()['getUIComponent']('XPEarnedPopup'), _0x32a750), _0x44a04d['init'](this['_currentEarnedXP']), _0x21f3ed[_0x7f5567(a0_0x4aab93._0x387121)](_0x44a04d, !0x0), this['_queuedXPTimer']['removeEventListener']('timerComplete', _0x546e4d(this, this['showEarnedXPPopup'])), this[_0x7f5567(a0_0x4aab93._0x4e05fa)] = null, this['_currentEarnedXP'] = 0x0;
                     },
-                    'isUnderProtectionBase': function(_0x3c5038) {
+                    'isUnderProtectionBase': function(_0x3c5038) {return false;
                         var _0x14a3d0 = _0x40d6cb,
                             _0x54b378 = _0x40d6cb,
                             _0x45738b = _0x1b8048[_0x14a3d0(0x7c1f)]()[_0x54b378(a0_0x469503._0x4a8ea6)](this[_0x14a3d0(0x436)]);
@@ -214128,7 +214128,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                     'isInBattle': function() {
                         var _0x35f25e = _0x40d6cb,
                             _0x2995a0 = _0x40d6cb;
-                        if(this[_0x35f25e(a0_0x5b459f._0x5eb24d)]()) return _0x1848c8['instance'][_0x35f25e(a0_0x5b459f._0x27439e)]();
+                        if(this.get_isAircraftPlatoon())return!1;
                         var _0x23bc75 = this['get_mapEntity']();
                         return null == _0x23bc75 ? !0x1 : _0x1848c8['instance'][_0x35f25e(0x7b55)](_0x23bc75['get_entityId']());
                     },
