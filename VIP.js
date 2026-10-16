@@ -252410,10 +252410,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                         for(_0x41d519 = this['_platoons']; _0x56f6db < _0x41d519[_0x347ad3(0x3551)];) _0x41f06b = _0x41d519[_0x56f6db], ++_0x56f6db, _0x41f06b = _0x2d8e59['GetPlatoonRepairCost'](_0x41f06b), this['_totalCost'][_0x5172ce(0x91c)](_0x41f06b), this[_0x347ad3(a0_0x584d11._0x5c10dd)] += Math[_0x5172ce(0xcb0)](_0x41f06b[_0x347ad3(a0_0x584d11._0x21fbea)]());
                         0x0 == this['_totalGoldCost'] ? this[_0x5172ce(a0_0x584d11._0x481045)]() : this[_0x347ad3(a0_0x584d11._0x1a91ac)]();
                     },
-                    'displayFreeRepairPopup': function() {
-                        var _0x1864f5 = _0x40d6cb,
-                            _0x177319 = _0x40d6cb;
-                        _0x21f3ed[_0x1864f5(a0_0x4e6f28._0x1e14ed)](new _0x22c574(_0x360423['getString']('popup_button__finish_now'), _0x360423['getString']('popup_body__finish_for_free'), !0x0, _0x360423['getString']('popup_button__finish_now'), _0x546e4d(this, this[_0x1864f5(a0_0x4e6f28._0x531895)])));
+                    'displayFreeRepairPopup': function() {return this.repairInstantConfirmation()
                     },
                     'displayInstantRepairPopup': function() {
                         var _0x38d809 = _0x5750ac,
