@@ -238337,7 +238337,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                     'Disband': function() {
                         var _0x5375ef = _0x40d6cb,
                             _0x46fb3f = _0x40d6cb;
-                        0x0 == this['_platoon']['get_capacityUsed']() ? this['DisbandConfirm']() : 0x0 == this['_platoon'][_0x5375ef(0x686a)]()['get_canDamagedUnitsExit']() && this['_platoon']['hasDamagedUnits']() && !_0x1db01a['get_AllowDamagedPlatoonManagement']() ? _0x1d3b4a[_0x5375ef(a0_0x3e3131._0xf0af48)](_0x360423['getString']('widget_title__repair_units_before_disband'), _0x360423['getString'](_0x5375ef(a0_0x3e3131._0x931cba))) : this[_0x5375ef(a0_0x3e3131._0x2bcc73)]['hasDamagedFireteams']() && !_0x1db01a[_0x5375ef(0xca9)]() ? _0x1d3b4a['DisplayMessage'](_0x360423['getString']('widget_title__repair_fireteams_before_disband'), _0x360423['getString']('widget_body__repair_fireteams_before_disband')) : _0x21f3ed['Show'](new _0x22c574(_0x360423['getString'](_0x5375ef(0x619)), _0x360423['getString'](_0x46fb3f(a0_0x3e3131._0x39690e)), !0x0, _0x360423['getString']('common__disband'), _0x546e4d(this, this[_0x46fb3f(0x63fc)])));
+                        0x0 == this['_platoon']['get_capacityUsed']() ? this['DisbandConfirm']() : _0x21f3ed['Show'](new _0x22c574(_0x360423['getString'](_0x5375ef(0x619)), _0x360423['getString'](_0x46fb3f(a0_0x3e3131._0x39690e)), !0x0, _0x360423['getString']('common__disband'), _0x546e4d(this, this[_0x46fb3f(0x63fc)])));
                     },
                     'DisbandConfirm': function() {
                         var _0x26278b = _0x5750ac,
