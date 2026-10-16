@@ -216094,7 +216094,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                         return 0x0 != this['_temporary'];
                     },
                     'get_isUncontrollable': function() {
-                        return 0x1 == this['_temporary'];
+                        return 0
                     },
                     'get_isControllable': function() {
                         return 0x1 != this['_temporary'];
