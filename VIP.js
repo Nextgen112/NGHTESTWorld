@@ -123057,7 +123057,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                 _0x38d86f['com.cc.build.BldgDefenseLab'] = _0x29838a, _0x29838a['__name__'] = 'com.cc.build.BldgDefenseLab', _0x29838a[_0xfb67eb(a0_0x9bc177._0x559a28)] = _0x2670fb, _0x29838a['prototype'] = _0x2c524d(_0x2670fb['prototype'], {
                     '_frameNumber': null,
                     '_ongoingResearches': null,
-                    'canResearch': function(_0x2a2193) {
+                    'canResearch': function(_0x2a2193) {return true;
                         var _0x155bf9 = _0x4b7dba;
                         if(null == _0x2a2193 || '' == _0x2a2193) return !0x1;
                         _0x2a2193 = this[_0x155bf9(a0_0x1ba4f7._0x506017)](_0x2a2193);
