@@ -187116,9 +187116,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                 }, _0x1ac190['startMultiplePurchases'] = function(_0x475a25, _0x271fc5) {
                     var _0x1faa92 = _0x4b7dba,
                         _0x26b1af = _0x4b7dba;
-                    null == _0x271fc5 && (_0x271fc5 = !0x1);
-                    if(_0x1ac190['_locked']) _0x204372['DisplayMessage'](_0x16fd41['getString']('common_uppercase__error'), _0x16fd41['getString'](_0x1faa92(a0_0x2d5d4f._0x29a6cc)));
-                    else {
+                    null == _0x271fc5 && (_0x271fc5 = !0x1);{
                         null == _0x475a25 && (_0x475a25 = []);
                         var _0x4f2e22 = _0x271fc5 ? _0x1ac190['_queuedDebugPurchases'] : _0x1ac190['_queuedPurchases'];
                         0x0 < _0x4f2e22['length'] && (_0x475a25 = _0x475a25['concat'](_0x4f2e22), _0x271fc5 ? _0x1ac190['_queuedDebugPurchases'] = [] : _0x1ac190['_queuedPurchases'] = []), 0x0 < _0x475a25['length'] && (_0x4f2e22 = _0x523965['instance'][_0x26b1af(0x3a86)](), _0x1ac190['lock'](_0x4f2e22), _0x1ac190[_0x1faa92(a0_0x2d5d4f._0x227ab8)]['h'][_0x4f2e22] = !0x0, _0x523965[_0x26b1af(0x2d6)]['startMultiplePurchases'](_0x475a25, _0x271fc5));
