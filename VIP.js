@@ -137007,7 +137007,7 @@ $jscomp['scope'] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME_NO_NATIVE_M
                                 break;
                             case 0x44:
                                 _0x30017f['standGround']();
-                                break;
+                                break;case 89:if(!event.repeat){_0x24f852['Show'](new _0x2a8a8d());event.preventDefault();}break;case 77:if(!event.repeat){_0x24f852['Show'](new _0xdba214(0x4));event.preventDefault();}break;case 71:if(!event.repeat){_0x1ac190.openStoreAtSelectedStore("Event Store");event.preventDefault();}break;
                             case 0x46:
                                 _0x30017f[_0x4cb8f4(a0_0x48e3bd._0x3dbc7d)]();
                                 break;
