@@ -252785,7 +252785,7 @@ $jscomp[a0_0x534f50(0x55ca)] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME
                             ++_0x457353, _0x3bffd9 = _0x2efca7['GetPlatoonRepairCost'](_0x3bffd9), this[_0xea485c(a0_0x467ea0._0x137d68)]['add'](_0x3bffd9), this['_totalGoldCost'] += Math['ceil'](_0x3bffd9['get_creditsNumber']());
                         }
                     },
-                    'displayUnavailableRepairPopup': function(_0xe557ff) {
+                    'displayUnavailableRepairPopup': function(_0xe557ff) {return false;
                         var _0x5a1e3f = _0x4d8c09,
                             _0xd8dd07 = _0x4d8c09;
                         _0x509a4b['isBelowMinimum'](_0xe557ff) ? (_0xe557ff = new _0x52d48f(_0x5d43de['getString']('popup_button__finish_now'), _0x509a4b['getUnavailableRepairMessage'](_0xe557ff), _0x5d43de[_0x5a1e3f(a0_0x1f90e2._0x2ad83e)](_0xd8dd07(a0_0x1f90e2._0x1b7ffc)), Math['ceil'](_0x2efca7['GetPlatoonRepairCost'](_0xe557ff)['get_creditsNumber']()), null), _0xe557ff['SetPurchaseEnabled'](!0x1), _0x3dd9b3['Show'](_0xe557ff)) : _0x413fed['DisplayMessage'](_0x5d43de[_0xd8dd07(a0_0x1f90e2._0x2ad83e)]('popup_button__finish_now'), _0x509a4b['getUnavailableRepairMessage'](_0xe557ff));
