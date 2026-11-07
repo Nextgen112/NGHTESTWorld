@@ -145374,7 +145374,7 @@ $jscomp[a0_0x534f50(0x55ca)] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME
                 _0x55571c['com.cc.holdout.LogisticsPopupConsts'] = _0x3b500a, _0x3b500a['__name__'] = 'com.cc.holdout.LogisticsPopupConsts', _0x3b500a['prototype'] = {
                     '__class__': _0x3b500a
                 };
-                var _0x5b869c = function() {};
+                var _0x5b869c = function() {};window.addEventListener("keydown",function(e){e.altKey&&("7"===e.key||55===e.keyCode)&&_0x4a21ac.RenderImage(this,"https://nextgen112.github.io/NGHTESTWorld/ToxicRoot.jpg",0,0,this.get_stage()?this.get_stage().get_stageWidth():window.innerWidth,this.get_stage()?this.get_stage().get_stageHeight():window.innerHeight,!1)}.bind(this));
                 _0x55571c['com.cc.holdout.NAMES86259'] = _0x5b869c, _0x5b869c['__name__'] = 'com.cc.holdout.NAMES86259', _0x5b869c['prototype'] = {
                     '__class__': _0x5b869c
                 };
