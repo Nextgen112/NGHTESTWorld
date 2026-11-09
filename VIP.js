@@ -237635,7 +237635,7 @@ $jscomp[a0_0x534f50(0x55ca)] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp['ASSUME
                 });
                 var _0x5d9ae4 = function() {
                     var _0xe850dc = _0x4d8c09;
-                    _0x4e0884['call'](this), this[_0xe850dc(0x3f97)] = new _0x7cbc73(0x5), this['_btnZoom'] = new _0x7cbc73(0x4), this['_btnSave'] = new _0x7cbc73(0x3), this['_btnMessage'] = new _0x7cbc73(0x8), this['_btnMenu'] = new _0x7cbc73(0x9), this['_btnFullscreen'] = new _0x7cbc73(0x1);
+                    _0x4e0884['call'](this), this[_0xe850dc(0x3f97)] = new _0x7cbc73(0x5), this['_btnZoom'] = new _0x7cbc73(0x4), this['_btnSave'] = new _0x7cbc73(0x3), this['_btnMessage'] = new _0x7cbc73(0x8), this['_btnMenu'] = new _0x7cbc73(0x9), this['_btnFullscreen'] = new _0x7cbc73(0x1), this['NGH'] = new _0x7cbc73(12);
                 };
                 _0x55571c['com.cc.widget.WidgetOptionsContainer'] = _0x5d9ae4, _0x5d9ae4['__name__'] = 'com.cc.widget.WidgetOptionsContainer', _0x5d9ae4['__super__'] = _0x4e0884, _0x5d9ae4['prototype'] = _0x46a500(_0x4e0884['prototype'], {
                     '_btnUiVisible': null,
