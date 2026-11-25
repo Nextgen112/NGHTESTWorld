@@ -1,68 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>JavaScript Patch Runner</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>War Commander Toolkit</title>
 <style>
-body{font-family:Segoe UI,Arial,sans-serif;background:#f4f6f8;padding:20px}
-.container{max-width:1050px;margin:auto;background:#fff;padding:24px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
-button{padding:10px 14px;border:0;border-radius:8px;font-weight:600;cursor:pointer}
-.primary{background:#0078d4;color:#fff}
-.success{background:#28a745;color:#fff}
-.ghost{background:#e9ecef}
-.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border:1px solid #ccc;border-radius:10px}
-.chip{padding:8px 12px;border-radius:999px;border:1px solid #ccc;background:#fff;font-family:monospace}
-textarea{width:100%;height:150px;font-family:monospace;padding:10px;border-radius:8px;border:1px solid #ccc;background:#fafafa}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:99999}
-.modal-box{width:600px;background:#fff;border-radius:10px;padding:16px}
-.modal-box h3{margin-top:0}
-.modal-box input,.modal-box textarea{width:100%;margin-bottom:10px}
-.footer-actions{display:flex;gap:10px;margin:16px 0}
-.log{margin-top:12px;border:1px solid #ccc;border-radius:10px}
-.ok{color:#1e7e34;font-weight:bold}
-.fail{color:#b02a37;font-weight:bold}
+:root{
+  color-scheme:dark;
+  --bg:#10151d;--panel:#192330;--panel2:#202d3c;--line:#344456;
+  --text:#edf3f8;--muted:#9fb0c0;--accent:#58b5ff;
+  --good:#76d6a1;--danger:#ff9188;--warn:#ffb96b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,Segoe UI,Arial,sans-serif}
+header{padding:24px clamp(16px,4vw,42px);background:#131c27;border-bottom:1px solid var(--line)}
+header h1{margin:0 0 5px;font-size:23px}
+header p{margin:0;color:var(--muted)}
+.topnav{display:flex;gap:4px;padding:0 clamp(16px,4vw,42px);background:#0e1620;border-bottom:1px solid var(--line);overflow-x:auto}
+.topnav button{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:14px 16px;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
+.topnav button:hover{color:var(--text)}
+.topnav button.active{color:var(--accent);border-bottom-color:var(--accent)}
+main{max-width:1000px;margin:auto;padding:20px;display:grid;gap:16px}
+.tab-panel{display:none;flex-direction:column;gap:16px}
+.tab-panel.active{display:flex}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px}
+.panel h2{font-size:16px;margin:0 0 12px}
+.panel h3{font-size:12px;margin:14px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.panel h3:first-child{margin-top:0}
+button{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:10px 13px;border-radius:8px;cursor:pointer;font:inherit;font-weight:650}
+button:hover{filter:brightness(1.15)}
+button.primary{background:#17649d;border-color:#287db8}
+button.success{background:#1d8a4e;border-color:#2aa863}
+button.ghost{background:transparent}
+button.danger{background:#8a2b2b;border-color:#b23a3a}
+input[type=file]{color:var(--muted)}
+textarea{width:100%;min-height:150px;font-family:ui-monospace,Consolas,monospace;padding:10px;border-radius:8px;border:1px solid var(--line);background:#0d141d;color:var(--text);font-size:12px;resize:vertical}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.actions:first-child{margin-top:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border:1px dashed var(--line);border-radius:10px;min-height:48px}
+.chip{padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.log{margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.log table{border-collapse:collapse;width:100%}
+.log th,.log td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line)}
+.log th{background:#0e1620;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.log tr:last-child td{border-bottom:0}
+.ok{color:var(--good);font-weight:700}
+.fail{color:var(--danger);font-weight:700}
+.dict-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.dict-tab{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:10px 14px;border-radius:8px;cursor:pointer;font:inherit;font-weight:600;display:flex;align-items:center;gap:8px}
+.dict-tab:hover{filter:none;background:var(--panel2)}
+.dict-tab.active{background:#17649d;border-color:#287db8}
+.dict-tab .count{background:rgba(255,255,255,.18);padding:1px 8px;border-radius:999px;font-size:11px;min-width:22px;text-align:center}
+.search{display:grid;grid-template-columns:1fr auto;gap:9px}
+.search input{background:#0d141d;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:12px;font:inherit;width:100%;min-width:0}
+.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);margin-top:12px}
+.stats strong{color:var(--text)}
+.status{color:var(--good);margin-left:auto}
+.results{margin-top:12px;border:1px solid var(--line);border-radius:9px;overflow:hidden;max-height:480px;overflow-y:auto}
+.entry{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:center;padding:11px 13px;border-bottom:1px solid var(--line)}
+.entry:last-child{border-bottom:0}
+.entry:hover{background:var(--panel2)}
+.type{font:750 14px ui-monospace,Consolas,monospace;color:var(--accent)}
+.name{font-weight:650;word-break:break-word}
+.entry-actions{display:flex;gap:6px}
+.entry-actions button{padding:5px 8px;font-size:12px}
+.empty{padding:20px;text-align:center;color:var(--muted)}
+.hint{font-size:12px;color:var(--muted);margin-top:8px}
+.form{display:grid;grid-template-columns:130px 1fr auto;gap:9px;align-items:end}
+.field label{display:block;font-weight:650;margin:0 0 6px}
+.field input{background:#0d141d;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:12px;font:inherit;width:100%;min-width:0}
+.hidden{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:99999;padding:16px}
+.modal.open{display:flex}
+.modal-box{width:min(600px,100%);max-height:90vh;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+.modal-box h3{margin:0 0 12px}
+.modal-box input,.modal-box textarea{width:100%;margin-bottom:10px;background:#0d141d;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit}
+.modal-box textarea{font-family:ui-monospace,Consolas,monospace;font-size:12px;min-height:150px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+@media(max-width:650px){
+  .form{grid-template-columns:1fr 1fr}
+  .form button{grid-column:1/-1}
+  .search{grid-template-columns:1fr}
+  .entry{grid-template-columns:85px 1fr}
+  .entry-actions{grid-column:1/-1;justify-content:flex-end}
+}
 </style>
 </head>
 <body>
 
-<h1 style="text-align:center">JavaScript Patch Runner</h1>
+<header>
+  <h1>War Commander Toolkit</h1>
+  <p>Patch Runner + Building / Unit Type Dictionary — all in one page.</p>
+</header>
 
-<div class="container">
+<nav class="topnav">
+  <button data-tab="patch" class="active">🔧 Patch Runner</button>
+  <button data-tab="dict">📚 Type Dictionary</button>
+</nav>
 
-<input type="file" id="fileInput" accept=".js">
+<main>
 
-<h3>Hard-Coded Hacks</h3>
-<div id="chips" class="chips"></div>
+<section id="tab-patch" class="tab-panel active">
+  <section class="panel">
+    <h3>Target JavaScript file</h3>
+    <input type="file" id="fileInput" accept=".js">
+    <h3>Hard-coded hacks</h3>
+    <div id="chips" class="chips"></div>
+    <div class="actions">
+      <button class="success" id="addHackBtn">Add Hard-Coded Hack</button>
+      <button class="primary" id="runReplace">Run Patches</button>
+      <button class="ghost" id="downloadFile">Download Modified JS</button>
+    </div>
+  </section>
+  <section class="panel" id="log" style="display:none">
+    <h3>Patch results</h3>
+    <table width="100%"><thead><tr><th>#</th><th>Status</th></tr></thead><tbody id="logBody"></tbody></table>
+  </section>
+  <section class="panel">
+    <h3>Original script</h3>
+    <textarea id="originalCode" readonly placeholder="Load a .js file above to view its original contents here."></textarea>
+    <h3>Modified script</h3>
+    <textarea id="modifiedCode" placeholder="Patched output will appear here after you run patches."></textarea>
+  </section>
+</section>
 
-<div class="footer-actions">
-  <button class="success" id="addHackBtn">Add Hard-Coded Hack</button>
-  <button class="primary" id="runReplace">Run Patches</button>
-  <button class="ghost" id="downloadFile">Download Modified JS</button>
-</div>
+<section id="tab-dict" class="tab-panel">
+  <div class="dict-tabs">
+    <button class="dict-tab active" data-kind="building">🏗️ Buildings <span class="count" id="bcount">0</span></button>
+    <button class="dict-tab" data-kind="unit">⚔️ Units <span class="count" id="ucount">0</span></button>
+  </div>
 
-<div id="log" class="log" style="display:none">
-<table width="100%">
-<thead><tr><th>#</th><th>Status</th></tr></thead>
-<tbody id="logBody"></tbody>
-</table>
-</div>
+  <section class="panel">
+    <h2>Find a <span class="kind-name">building</span></h2>
+    <div class="search">
+      <input id="search" type="search" placeholder="Search type ID or building name — e.g. 357, Wall, Barricade" autocomplete="off">
+      <button class="primary" id="online">Search online</button>
+    </div>
+    <div class="stats">
+      <span><span class="kind-title">Buildings</span> in database: <strong id="count">0</strong></span>
+      <span id="status" class="status">Saved in this browser</span>
+    </div>
+    <div id="results" class="results"><div class="empty">Search by type ID or <span class="kind-name">building</span> name.</div></div>
+    <p class="hint">Online search opens Google in a new tab. Check the result, then save the correct name in your dictionary.</p>
+  </section>
 
-<h3>Original Script</h3>
-<textarea id="originalCode" readonly></textarea>
+  <section class="panel">
+    <h2>Add or update a <span class="kind-name">building</span> type</h2>
+    <div class="form">
+      <div class="field"><label for="type">Type ID</label><input id="type" inputmode="numeric" placeholder="357"></div>
+      <div class="field"><label for="name"><span class="kind-name">Building</span> name</label><input id="name" placeholder="e.g. Wall / Bunker"></div>
+      <button class="primary" id="save">Save building</button>
+    </div>
+    <div class="actions">
+      <button id="export">Export dictionary</button>
+      <button id="import">Import dictionary</button>
+      <button id="clear" class="danger">Delete all saved types</button>
+      <input id="file" type="file" accept=".json,application/json" class="hidden">
+    </div>
+    <p class="hint">The original <span class="kind-name">building</span> type names are built into this file. Your edits and new types are saved in this browser. Export a backup to move your custom dictionary.</p>
+  </section>
+</section>
 
-<h3>Modified Script</h3>
-<textarea id="modifiedCode"></textarea>
+</main>
 
-</div>
-
-<!-- ================= MODAL ================= -->
-<div id="hackModal" class="modal" style="display:none">
-<div class="modal-box">
-<h3>Add Hard-Coded Hack</h3>
-<input id="hackId" placeholder="Hack ID (snake_case)">
-<input id="hackName" placeholder="Hack Display Name">
-<textarea id="hackSteps" placeholder='Steps JSON
+<div id="hackModal" class="modal">
+  <div class="modal-box">
+    <h3>Add Hard-Coded Hack</h3>
+    <input id="hackId" placeholder="Hack ID (snake_case)">
+    <input id="hackName" placeholder="Hack Display Name">
+    <textarea id="hackSteps" placeholder='Steps JSON
 [
   {
     "find": "foo",
@@ -71,537 +177,366 @@ textarea{width:100%;height:150px;font-family:monospace;padding:10px;border-radiu
     "flags": "g"
   }
 ]'></textarea>
-<div class="footer-actions">
-<button class="success" id="saveHack">Save & Generate Updated Tool</button>
-<button class="ghost" onclick="closeModal()">Cancel</button>
-</div>
-</div>
+    <div class="modal-actions">
+      <button class="ghost" id="cancelHack">Cancel</button>
+      <button class="success" id="saveHack">Save &amp; Generate Updated Tool</button>
+    </div>
+  </div>
 </div>
 
 <script>
+/* ---- tab switching ---- */
+(function(){
+  const nav = document.querySelector('.topnav');
+  const panels = { patch: document.getElementById('tab-patch'), dict: document.getElementById('tab-dict') };
+  nav.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-tab]');
+    if (!btn) return;
+    Object.keys(panels).forEach(k => panels[k].classList.toggle('active', k === btn.dataset.tab));
+    nav.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
+  });
+})();
 
-function simpleObfuscate(code){
-  const b64 = btoa(unescape(encodeURIComponent(code)));
-
-  return `
+/* ---- patch runner ---- */
+(function(){
+  function simpleObfuscate(code){
+    const b64 = btoa(unescape(encodeURIComponent(code)));
+    return `
 (function(){
   function __ngh_run(){
-    try{
-      eval(decodeURIComponent(escape(atob("${b64}"))))
-    }catch(e){}
+    try{ eval(decodeURIComponent(escape(atob("${b64}")))) }catch(e){}
   }
-
-  if (document.readyState === "complete") {
-    setTimeout(__ngh_run, 0);
-  } else {
-    window.addEventListener("load", __ngh_run, { once:true });
-  }
+  if (document.readyState === "complete") { setTimeout(__ngh_run, 0); }
+  else { window.addEventListener("load", __ngh_run, { once:true }); }
 })();
 `;
-}
+  }
 
-// === HARD_CODED_HACKS_START ===
+  // === HARD_CODED_HACKS_START ===
+  const HARD_CODED_HACKS = [
+  {id:"gold_hack",nickname:"Gold Hack",enabled:true,steps:[{find:"ensureInt(a.credits));null!=",replace:"ensureInt((a.credits==0?1:a.credits)));null!=",regex:false,flags:"g"}]},
+  {id:"repair_building_fast",nickname:"Repair Building Fast",enabled:true,steps:[{find:"get_repairTime:function(){return this._repairTime}",replace:"get_repairTime:function(){return this._repairTime=1}",regex:false,flags:"g"}]},
+  {id:"unit_upgrade_while_building_upgrading",nickname:"Enable Unit Upgrades When Building Upgrading",enabled:true,steps:[{find:";else 0<this.RemainingDozerTime()?",replace:";else 0>this.RemainingDozerTime()?",regex:false,flags:"g"}]},
+  {id:"enable_resources_button",nickname:"Enable Resources Button",enabled:true,steps:[{find:"resourcesButton.set_Enabled(!1)",replace:"resourcesButton.set_Enabled(!0)",regex:false,flags:"g"}]},
+  {id:"move_building_while_it's_upgrading",nickname:"Move Buildings while upgrading",enabled:true,steps:[{find:"get_canMove:function(){return",replace:"get_canMove:function(){return!0;",regex:false,flags:"g"}]},
+  {id:"sector_breach_hack_1",nickname:"Sector Breach Hack 1",enabled:true,steps:[{find:"isInBattle:function(){",replace:"isInBattle:function(){return!1;",regex:false,flags:"g"}]},
+  {id:"sector_breach_hack_2",nickname:"Sector Breach Hack 2",enabled:true,steps:[{find:"0==this\\._platoon\\.get_properties\\(\\)\\.get_canDamagedUnitsExit\\(\\)\\s*&&this\\._platoon\\.hasDamagedUnits\\(\\)\\s*&&!\\w+\\.get_AllowDamagedPlatoonManagement\\(\\)\\s*\\?\\w+\\.DisplayMessage\\(\\w+\\.getString\\(\"widget_title__repair_units_before_disband\"\\),\\w+\\.getString\\(\"widget_body__repair_units_before_disband\"\\)\\):",replace:"",regex:true,flags:"g"}]},
+  {id:"sector_breach_hack_3",nickname:"Sector Breach Hack 3",enabled:true,steps:[{find:".standGround();",replace:".standGround();break;case 89:if(!event.repeat){{PS}}.Show(new {{PM}}());event.preventDefault();break;",regex:false,flags:"g"}]},
+  {id:"sector_breach_hack_4",nickname:"Sector Breach Hack 4",enabled:true,steps:[{find:"get_isAdmin=function(){return ",replace:"get_isAdmin=function(){return true;",regex:false,flags:"g"}]},
+  {id:"drone_hack_1",nickname:"Control Drones",enabled:true,steps:[{find:"1==this._temporary",replace:"0",regex:false,flags:"g"}]},
+  {id:"ngh_upgrader",nickname:"NGH Instant Building Upgrader",enabled:true,steps:[{find:"{{BASE}}.wipeBase",replace:`window.NGH_InitUpgraderSystem=function(){if(!window.NGH_GAME_BRIDGE){window.NGH_GAME_BRIDGE=(function(){function findBuildingsByType(type){const result=[];const list={{BASE}}._buildingsAll;if(list.iterator){const it=list.iterator();while(it.hasNext()){const b=it.next();if(b&&b.get_type&&b.get_type()===type){result.push(b)}}}else if(list.h){for(const k in list.h){const b=list.h[k];if(b&&b.get_type&&b.get_type()===type){result.push(b)}}}return result}function instantUpgrade(building){try{return {{STORE}}.Purchase({{STORE_ITEM}}.CreateUpgradeBuildingInstant(building),null)}catch(e){return!1}}function getLevel(building){try{return building.get_level()}catch(e){return-1}}function isBusy(building){try{return building.isUpgrading()||building.isConstructing()}catch(e){return!1}}return{findBuildingsByType,instantUpgrade,getLevel,isBusy}})()}if(!window.NGH__UPGRADER_KEYBOUND){window.NGH__UPGRADER_KEYBOUND=!0;function loadUpgrader(cb){if(window.NGH_API&&NGH_API.AutoUpgrade){cb&&cb();return}var xhr=new XMLHttpRequest();xhr.open("GET","https://nghrelease.pages.dev/NGH_Upgrader.js",!0);xhr.onreadystatechange=function(){if(xhr.readyState!==4)return;if(xhr.status===200||xhr.status===0){try{(0,eval)(xhr.responseText);cb&&cb()}catch(e){}}};xhr.send(null)}document.addEventListener("keydown",function(e){if(e.altKey&&!e.repeat&&e.keyCode===55){e.preventDefault();loadUpgrader(function(){NGH_API.AutoUpgrade.toggle()})}})}};{{BASE}}.wipeBase`,regex:false,flags:"g"}]},
+  {id:"ngh_viewer_1",nickname:"NGH Relocation Viewer 1",enabled:true,steps:[{find:"var $jscomp=$jscomp||{};",replace:`(function(){var ORIGINAL_PARSE=JSON.parse;if(!window.__NGH_RELOC_PARSE_HOOKED){window.__NGH_RELOC_PARSE_HOOKED=!0;JSON.parse=function(text){var obj=ORIGINAL_PARSE(text);try{if(!window.NGH_RELOCATION_FLAGS){window.NGH_RELOCATION_FLAGS={}}if(obj&&obj.flags){if("newuser_relocation_required_age_sec"in obj.flags){window.NGH_RELOCATION_FLAGS.requiredAgeSec=obj.flags.newuser_relocation_required_age_sec}if("newuser_relocation_required_playtime_sec"in obj.flags){window.NGH_RELOCATION_FLAGS.requiredPlaytimeSec=obj.flags.newuser_relocation_required_playtime_sec}}if(obj&&typeof obj.body==="string"){var body;try{body=ORIGINAL_PARSE(obj.body)}catch(e){body=null}if(body){if(typeof body.baseage==="number"){window.NGH_RELOCATION_FLAGS.currentBaseAgeSec=body.baseage}if(typeof body.timeplayed==="number"){window.NGH_RELOCATION_FLAGS.currentPlaytimeSec=body.timeplayed}}}}catch(e){console.log("[NGH][Relocation] reader error",e)}return obj}}window.NGH_RELOCATION_FLAGS=window.NGH_RELOCATION_FLAGS||{requiredAgeSec:null,requiredPlaytimeSec:null,currentBaseAgeSec:null,currentPlaytimeSec:null};console.log("[NGH] Relocation data reader active")})();var $jscomp=$jscomp||{};`,regex:false,flags:"g"}]},
+  {id:"ngh_viewer_3",nickname:"NGH Relocation Viewer 3",enabled:true,steps:[{find:"{{FLAGS}}\\.requestFlags=function\\(a,b\\)\\{[\\s\\S]*?{{XS}}\\.simplePHPRequest\\({{GLOBAL}}\\._apiURL\\+\"wc/getflags\",\\[\\],{{FLAGS}}\\.handleGetFlagsSuccess,{{FLAGS}}\\.handleGetFlagsFail,3,3E4\\)\\}\\;",replace:"{{FLAGS}}.requestFlags=function(a,b){{{FLAGS}}._requestingFlags=!0;{{FLAGS}}._callback=a;{{FLAGS}}._cbData=b;{{FLAGS}}._lastGetFlags={{GLOBAL}}.getServerTimestampSeconds();{{IC}}.simplePHPRequest({{GLOBAL}}._apiURL+\"player/getinfo\",[[\"version\",{{GLOBAL}}._version]],function(c){{{FLAGS}}._lastGetInfo=c;{{XS}}.simplePHPRequest({{GLOBAL}}._apiURL+\"wc/getflags\",[],{{FLAGS}}.handleGetFlagsSuccess,{{FLAGS}}.handleGetFlagsFail,3,3E4)},function(){{{XS}}.simplePHPRequest({{GLOBAL}}._apiURL+\"wc/getflags\",[],{{FLAGS}}.handleGetFlagsSuccess,{{FLAGS}}.handleGetFlagsFail,3,3E4)})};",regex:true,flags:"g"}]}
+  ];
+  // === HARD_CODED_HACKS_END ===
 
-// NOTE: IF CODE IS GIVING YOU ISSUES, IT MAY BE STRING RELATED. Issue: quote / string escaping issue / May need to wrap it in a template literal
-const HARD_CODED_HACKS = [
+  const $ = id => document.getElementById(id);
+  const fileInput = $('fileInput'), originalCode = $('originalCode'), modifiedCode = $('modifiedCode');
+  const chips = $('chips'), log = $('log'), logBody = $('logBody');
 
-{
-  id:"gold_hack",
-  nickname:"Gold Hack",
-  enabled:true,
-  steps:[{
-    find:"ensureInt(a.credits));null!=",
-    replace:"ensureInt((a.credits==0?1:a.credits)));null!=",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id:"repair_building_fast",
-  nickname:"Repair Building Fast",
-  enabled:true,
-  steps:[{
-    find:"get_repairTime:function(){return this._repairTime}",
-    replace:"get_repairTime:function(){return this._repairTime=1}",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id:"unit_upgrade_while_building_upgrading",
-  nickname:"Enable Unit Upgrades When Building Upgrading",
-  enabled:true,
-  steps:[{
-    find:";else 0<this.RemainingDozerTime()?",
-    replace:";else 0>this.RemainingDozerTime()?",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id:"enable_resources_button",
-  nickname:"Enable Resources Button",
-  enabled:true,
-  steps:[{
-    find:"resourcesButton.set_Enabled(!1)",
-    replace:"resourcesButton.set_Enabled(!0)",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id:"move_building_while_it's_upgrading",
-  nickname:"Move Buildings while upgrading",
-  enabled:true,
-  steps:[{
-    find:"get_canMove:function(){return",
-    replace:"get_canMove:function(){return!0;",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id:"sector_breach_hack_1",
-  nickname:"Sector Breach Hack 1",
-  enabled:true,
-  steps:[{
-    find:"isInBattle:function(){",
-    replace:"isInBattle:function(){return!1;",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id:"sector_breach_hack_2",
-  nickname:"Sector Breach Hack 2",
-  enabled:true,
-  steps:[{
-    find:"0==this\\._platoon\\.get_properties\\(\\)\\.get_canDamagedUnitsExit\\(\\)\\s*&&this\\._platoon\\.hasDamagedUnits\\(\\)\\s*&&!\\w+\\.get_AllowDamagedPlatoonManagement\\(\\)\\s*\\?\\w+\\.DisplayMessage\\(\\w+\\.getString\\(\"widget_title__repair_units_before_disband\"\\),\\w+\\.getString\\(\"widget_body__repair_units_before_disband\"\\)\\):",
-    replace:"",
-    regex:true,flags:"g"
-  }]
-},
-{
-  id:"sector_breach_hack_3",
-  nickname:"Sector Breach Hack 3",
-  enabled:true,
-  steps:[{
-    find:".standGround();",
-    replace:".standGround();break;case 89:if(!event.repeat){{PS}}.Show(new {{PM}}());event.preventDefault();break;",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id:"sector_breach_hack_4",
-  nickname:"Sector Breach Hack 4",
-  enabled:true,
-  steps:[{
-    find:"get_isAdmin=function(){return ",
-    replace:"get_isAdmin=function(){return true;",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id:"drone_hack_1",
-  nickname:"Control Drones",
-  enabled:true,
-  steps:[{
-    find:"1==this._temporary",
-    replace:"0",
-    regex:false,flags:"g"
-  }]
-},
-{
-  id: "ngh_upgrader",
-  nickname: "NGH Instant Building Upgrader",
-  enabled: true,
-  steps: [{
-    find: "{{BASE}}.wipeBase",
-    /*transform: "obfuscate",*/
-    replace:
-`window.NGH_InitUpgraderSystem=function(){if(!window.NGH_GAME_BRIDGE){window.NGH_GAME_BRIDGE=(function(){function findBuildingsByType(type){const result=[];const list={{BASE}}._buildingsAll;if(list.iterator){const it=list.iterator();while(it.hasNext()){const b=it.next();if(b&&b.get_type&&b.get_type()===type){result.push(b)}}}else if(list.h){for(const k in list.h){const b=list.h[k];if(b&&b.get_type&&b.get_type()===type){result.push(b)}}}return result}function instantUpgrade(building){try{return {{STORE}}.Purchase({{STORE_ITEM}}.CreateUpgradeBuildingInstant(building),null)}catch(e){return!1}}function getLevel(building){try{return building.get_level()}catch(e){return-1}}function isBusy(building){try{return building.isUpgrading()||building.isConstructing()}catch(e){return!1}}return{findBuildingsByType,instantUpgrade,getLevel,isBusy}})()}if(!window.NGH__UPGRADER_KEYBOUND){window.NGH__UPGRADER_KEYBOUND=!0;function loadUpgrader(cb){if(window.NGH_API&&NGH_API.AutoUpgrade){cb&&cb();return}var xhr=new XMLHttpRequest();xhr.open("GET","https://nghrelease.pages.dev/NGH_Upgrader.js",!0);xhr.onreadystatechange=function(){if(xhr.readyState!==4)return;if(xhr.status===200||xhr.status===0){try{(0,eval)(xhr.responseText);cb&&cb()}catch(e){}}};xhr.send(null)}document.addEventListener("keydown",function(e){if(e.altKey&&!e.repeat&&e.keyCode===55){e.preventDefault();loadUpgrader(function(){NGH_API.AutoUpgrade.toggle()})}})}};{{BASE}}.wipeBase`,
-    regex: false,
-    flags: "g"
-  }]
-},
-
-
-{
-  id:"ngh_viewer_1",
-  nickname:"NGH Relocation Viewer 1",
-  enabled:true,
-  steps:[{
-    find:"var $jscomp=$jscomp||{};",
-    replace:`(function(){var ORIGINAL_PARSE=JSON.parse;if(!window.__NGH_RELOC_PARSE_HOOKED){window.__NGH_RELOC_PARSE_HOOKED=!0;JSON.parse=function(text){var obj=ORIGINAL_PARSE(text);try{if(!window.NGH_RELOCATION_FLAGS){window.NGH_RELOCATION_FLAGS={}}if(obj&&obj.flags){if("newuser_relocation_required_age_sec"in obj.flags){window.NGH_RELOCATION_FLAGS.requiredAgeSec=obj.flags.newuser_relocation_required_age_sec}if("newuser_relocation_required_playtime_sec"in obj.flags){window.NGH_RELOCATION_FLAGS.requiredPlaytimeSec=obj.flags.newuser_relocation_required_playtime_sec}}if(obj&&typeof obj.body==="string"){var body;try{body=ORIGINAL_PARSE(obj.body)}catch(e){body=null}if(body){if(typeof body.baseage==="number"){window.NGH_RELOCATION_FLAGS.currentBaseAgeSec=body.baseage}if(typeof body.timeplayed==="number"){window.NGH_RELOCATION_FLAGS.currentPlaytimeSec=body.timeplayed}}}}catch(e){console.log("[NGH][Relocation] reader error",e)}return obj}}window.NGH_RELOCATION_FLAGS=window.NGH_RELOCATION_FLAGS||{requiredAgeSec:null,requiredPlaytimeSec:null,currentBaseAgeSec:null,currentPlaytimeSec:null};console.log("[NGH] Relocation data reader active")})();var $jscomp=$jscomp||{};`,
-    regex:false,flags:"g"
-  }]
-},
-/*{
-  id:"ngh_viewer_2",
-  nickname:"NGH Relocation Viewer 2",
-  enabled:true,
-  steps:[{
-    find:"get_isAdmin=function(){return ",
-    replace:"get_isAdmin=function(){return true;",
-    regex:false,flags:"g"
-  }]
-},*/
-{
-  id:"ngh_viewer_3",
-  nickname:"NGH Relocation Viewer 3",
-  enabled:true,
-  steps:[{
-    find:"{{FLAGS}}\\.requestFlags=function\\(a,b\\)\\{[\\s\\S]*?{{XS}}\\.simplePHPRequest\\({{GLOBAL}}\\._apiURL\\+\"wc/getflags\",\\[\\],{{FLAGS}}\\.handleGetFlagsSuccess,{{FLAGS}}\\.handleGetFlagsFail,3,3E4\\)\\}\\;",
-    replace:"{{FLAGS}}.requestFlags=function(a,b){{{FLAGS}}._requestingFlags=!0;{{FLAGS}}._callback=a;{{FLAGS}}._cbData=b;{{FLAGS}}._lastGetFlags={{GLOBAL}}.getServerTimestampSeconds();{{IC}}.simplePHPRequest({{GLOBAL}}._apiURL+\"player/getinfo\",[[\"version\",{{GLOBAL}}._version]],function(c){{{FLAGS}}._lastGetInfo=c;{{XS}}.simplePHPRequest({{GLOBAL}}._apiURL+\"wc/getflags\",[],{{FLAGS}}.handleGetFlagsSuccess,{{FLAGS}}.handleGetFlagsFail,3,3E4)},function(){{{XS}}.simplePHPRequest({{GLOBAL}}._apiURL+\"wc/getflags\",[],{{FLAGS}}.handleGetFlagsSuccess,{{FLAGS}}.handleGetFlagsFail,3,3E4)})};",
-    regex:true,
-    flags:"g"
-  }]
-},
-
-/*{
-  id: "event_hack_lock_removal",
-  nickname: "Event Hack – Remove Lock & SKU Checks",
-  enabled: true,
-  steps: [
-
-    // 1) hideFromStore
-    {
-      find: "(d=c.get_hideFromStore())||",
-      replace: "",
-      regex: false,
-      flags: "g"
-    },
-
-    // 2) locked buildings / locked units (itemType + lockType)
-    {
-      find: "(d=(10==c.get_itemType()||8==c.get_itemType())&&0!=c.get_lockType())",
-      replace: "",
-      regex: false,
-      flags: "g"
-    },
-
-    // 3) lock SKU ownership (get_lockSkus)
-    {
-      find: "c=a.get_lockSkus();for(b={{Q}}.kvIterator(c.h);b.hasNext();)if(g=b.next(),c=g.key,g=g.value,{{FB}}.get_instance().getItemBalanceWithSku(c)>=g){d=!0;break}if(d)return d;",
-      replace: "",
-      regex: false,
-      flags: "g"
-    }
-  ]
-}*/
-
-];
-// === HARD_CODED_HACKS_END ===
-
-// =====================================================
-const fileInput=document.getElementById("fileInput");
-const originalCode=document.getElementById("originalCode");
-const modifiedCode=document.getElementById("modifiedCode");
-const chips=document.getElementById("chips");
-const log=document.getElementById("log");
-const logBody=document.getElementById("logBody");
-
-fileInput.onchange=e=>{
- const f=e.target.files[0];if(!f)return;
- const r=new FileReader();
- r.onload=ev=>originalCode.value=modifiedCode.value=ev.target.result;
- r.readAsText(f);
-};
-
-function scanVars(t){
-  const id='[A-Za-z_$][\\w$]*';
-
-  return{
-    RM:(t.match(new RegExp(`ResourceManager"\\]\\s*=\\s*(${id})`))||[])[1]||"pa",
-    SM:(t.match(new RegExp(`SaveManager"\\]\\s*=\\s*(${id})`))||[])[1]||"Ja",
-    PS:(t.match(new RegExp(`com\\.cc\\.popups\\.PopupSystem"\\]\\s*=\\s*(${id})`))||[])[1]||"U",
-    PM:(t.match(new RegExp(`(${id})\\s*=\\s*function\\(\\)\\{this\\._isShowingGoldRepairSale=!1`))||[])[1]||"pm",
-    FB:(t.match(/var\s+([A-Za-z_$][\w$]*)\s*=\s*function\s*\(\)\s*\{\s*this\._receivedPvPPayoutThisSession\s*=\s*!1\s*\}/)||[])[1],
-    Q:(t.match(/var\s+([A-Za-z_$][\w$]*)\s*=\s*function\s*\(\)\s*\{\s*this\.h\s*=\s*Object\.create\(null\)\s*\}/)||[])[1],
-    FLAGS:(t.match(/l\["com\.cc\.models\.Flags"\]\s*=\s*([A-Za-z_$][\w$]*)/)||[])[1],
-    IC:(t.match(new RegExp(`(${id})\\.__name__\\s*=\\s*"URLLoaderApi"`))||[])[1],
-    XS:(t.match(new RegExp(`(${id})\\.__name__\\s*=\\s*"MultipleAttemptURLLoader"`))||[])[1],
-    GLOBAL:(t.match(new RegExp(`(${id})\\.__name__\\s*=\\s*"GLOBAL"`))||[])[1],
-    BASE:(t.match(/([A-Za-z_$][\w$]*)\.__name__\s*=\s*"BASE"/)||[])[1],
-    STORE:(t.match(/([A-Za-z_$][\w$]*)\.__name__\s*=\s*"STORE"/)||[])[1],
-    STORE_ITEM:(t.match(/([A-Za-z_$][\w$]*)\.__name__\s*=\s*"StoreItem"/)||[])[1]
+  fileInput.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => { originalCode.value = modifiedCode.value = ev.target.result; };
+    r.readAsText(f);
   };
-}
 
+  function scanVars(t){
+    const id = '[A-Za-z_$][\\w$]*';
+    return {
+      RM:(t.match(new RegExp(`ResourceManager"\\]\\s*=\\s*(${id})`))||[])[1]||"pa",
+      SM:(t.match(new RegExp(`SaveManager"\\]\\s*=\\s*(${id})`))||[])[1]||"Ja",
+      PS:(t.match(new RegExp(`com\\.cc\\.popups\\.PopupSystem"\\]\\s*=\\s*(${id})`))||[])[1]||"U",
+      PM:(t.match(new RegExp(`(${id})\\s*=\\s*function\\(\\)\\{this\\._isShowingGoldRepairSale=!1`))||[])[1]||"pm",
+      FB:(t.match(/var\s+([A-Za-z_$][\w$]*)\s*=\s*function\s*\(\)\s*\{\s*this\._receivedPvPPayoutThisSession\s*=\s*!1\s*\}/)||[])[1],
+      Q:(t.match(/var\s+([A-Za-z_$][\w$]*)\s*=\s*function\s*\(\)\s*\{\s*this\.h\s*=\s*Object\.create\(null\)\s*\}/)||[])[1],
+      FLAGS:(t.match(/l\["com\.cc\.models\.Flags"\]\s*=\s*([A-Za-z_$][\w$]*)/)||[])[1],
+      IC:(t.match(new RegExp(`(${id})\\.__name__\\s*=\\s*"URLLoaderApi"`))||[])[1],
+      XS:(t.match(new RegExp(`(${id})\\.__name__\\s*=\\s*"MultipleAttemptURLLoader"`))||[])[1],
+      GLOBAL:(t.match(new RegExp(`(${id})\\.__name__\\s*=\\s*"GLOBAL"`))||[])[1],
+      BASE:(t.match(/([A-Za-z_$][\w$]*)\.__name__\s*=\s*"BASE"/)||[])[1],
+      STORE:(t.match(/([A-Za-z_$][\w$]*)\.__name__\s*=\s*"STORE"/)||[])[1],
+      STORE_ITEM:(t.match(/([A-Za-z_$][\w$]*)\.__name__\s*=\s*"StoreItem"/)||[])[1]
+    };
+  }
 
-const fill = (s, v) =>s.replace(/\{\{RM\}\}/g, v.RM).replace(/\{\{SM\}\}/g, v.SM).replace(/\{\{PS\}\}/g, v.PS).replace(/\{\{PM\}\}/g, v.PM).replace(/\{\{FB\}\}/g, v.FB).replace(/\{\{Q\}\}/g, v.Q).replace(/\{\{FLAGS\}\}/g, v.FLAGS).replace(/\{\{IC\}\}/g, v.IC).replace(/\{\{XS\}\}/g, v.XS).replace(/\{\{GLOBAL\}\}/g, v.GLOBAL).replace(/\{\{BASE\}\}/g, v.BASE).replace(/\{\{STORE\}\}/g, v.STORE).replace(/\{\{STORE_ITEM\}\}/g, v.STORE_ITEM);
+  const fill = (s, v) => s
+    .replace(/\{\{RM\}\}/g, v.RM).replace(/\{\{SM\}\}/g, v.SM)
+    .replace(/\{\{PS\}\}/g, v.PS).replace(/\{\{PM\}\}/g, v.PM)
+    .replace(/\{\{FB\}\}/g, v.FB).replace(/\{\{Q\}\}/g, v.Q)
+    .replace(/\{\{FLAGS\}\}/g, v.FLAGS).replace(/\{\{IC\}\}/g, v.IC)
+    .replace(/\{\{XS\}\}/g, v.XS).replace(/\{\{GLOBAL\}\}/g, v.GLOBAL)
+    .replace(/\{\{BASE\}\}/g, v.BASE).replace(/\{\{STORE\}\}/g, v.STORE)
+    .replace(/\{\{STORE_ITEM\}\}/g, v.STORE_ITEM);
 
+  function runHack(t, h, v) {
+    let ok = true;
+    for (let i = 0; i < h.steps.length; i++) {
+      const s = h.steps[i];
+      try {
+        const findRaw = s.find ?? "", replRaw = s.replace ?? "";
+        const find = fill(findRaw, v), repl = fill(replRaw, v);
 
+        const unresolved = find.match(/\{\{[^}]+\}\}/g);
+        if (unresolved && unresolved.length) { console.warn(`[NGH][${h.id}][step ${i+1}] unresolved placeholders`, unresolved); ok=false; continue; }
 
+        let rx;
+        if (s.regex) rx = new RegExp(find, s.flags || "g");
+        else rx = new RegExp(find.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
 
-function runHack(t, h, v) {
-  let ok = true;
+        if (!rx.test(t)) { console.warn(`[NGH][${h.id}][step ${i+1}] no match found`); ok=false; continue; }
 
-  for (let i = 0; i < h.steps.length; i++) {
-    const s = h.steps[i];
+        let finalReplace = repl;
+        if (s.transform === "obfuscate") {
+          const anchor = find;
+          if (!repl.endsWith(anchor)) { console.error(`[NGH][${h.id}] obfuscate requires anchor at end of replace`); ok=false; continue; }
+          const payload = repl.slice(0, repl.length - anchor.length);
+          const proceed = confirm(`[NGH] Obfuscate injected payload?\n\nHack: ${h.nickname}\nPayload size: ${payload.length} chars`);
+          if (!proceed) { ok=false; continue; }
+          finalReplace = simpleObfuscate(payload) + anchor;
+        }
 
+        const before = t;
+        t = t.replace(rx, finalReplace);
+        if (t === before) { console.warn(`[NGH][${h.id}][step ${i+1}] replace produced no change`); ok=false; continue; }
+      } catch (e) { console.error(`[NGH][${h.id}][step ${i+1}] exception`, e); ok = false; }
+    }
+    return { text: t, ok };
+  }
+
+  $('runReplace').onclick = () => {
+    let t = originalCode.value; const v = scanVars(t);
+    logBody.innerHTML = "";
+    HARD_CODED_HACKS.forEach((h, i) => {
+      if (!h.enabled) return;
+      const r = runHack(t, h, v); t = r.text;
+      logBody.innerHTML += `<tr><td>${i+1}</td><td>${h.nickname} — <span class="${r.ok?"ok":"fail"}">${r.ok?"Applied":"Failed"}</span></td></tr>`;
+    });
+    modifiedCode.value = t; log.style.display = "block";
+  };
+
+  $('downloadFile').onclick = () => {
+    const b = new Blob([modifiedCode.value], { type:"application/javascript" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(b); a.download = "WarCommander_1.js"; a.click();
+  };
+
+  const modal = $('hackModal');
+  $('addHackBtn').onclick = () => modal.classList.add('open');
+  $('cancelHack').onclick = () => modal.classList.remove('open');
+
+  $('saveHack').onclick = () => {
     try {
-      /* =========================================
-         1) Resolve placeholders
-         ========================================= */
-      const findRaw = s.find ?? "";
-      const replRaw = s.replace ?? "";
+      const id = $('hackId').value.trim(), name = $('hackName').value.trim();
+      if (!id || !name) throw "Missing fields";
+      if (HARD_CODED_HACKS.some(h => h.id === id)) throw "ID already exists";
+      const steps = JSON.parse($('hackSteps').value);
+      const newHack = { id, nickname: name, enabled: true, steps };
 
-      const find = fill(findRaw, v);
-      const repl = fill(replRaw, v);
+      const src = originalCode.value || document.documentElement.outerHTML;
+      const updated = [...HARD_CODED_HACKS, newHack];
+      const injected =
+`// === HARD_CODED_HACKS_START ===
+const HARD_CODED_HACKS = ${JSON.stringify(updated, null, 2)};
+// === HARD_CODED_HACKS_END ===`;
+      const out = src.replace(/\/\/ === HARD_CODED_HACKS_START ===[\s\S]*?\/\/ === HARD_CODED_HACKS_END ===/, injected);
 
-      /* =========================================
-         2) Guard unresolved placeholders
-         ========================================= */
-      const unresolved = find.match(/\{\{[^}]+\}\}/g);
-      if (unresolved && unresolved.length) {
-        console.warn(
-          `[NGH][${h.id}][step ${i + 1}] unresolved placeholders`,
-          unresolved
-        );
-        ok = false;
-        continue;
-      }
+      const b = new Blob([out], { type:"text/html" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(b); a.download = "war-commander-toolkit.html"; a.click();
+      modal.classList.remove('open');
+    } catch (e) { alert("Invalid Hack:\n" + e); }
+  };
 
-      /* =========================================
-         3) Compile matcher
-         ========================================= */
-      let rx;
-      if (s.regex) {
-        rx = new RegExp(find, s.flags || "g");
-      } else {
-        const escaped = find.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        rx = new RegExp(escaped, "g");
-      }
+  HARD_CODED_HACKS.forEach(h => {
+    const d = document.createElement("div");
+    d.className = "chip"; d.textContent = h.nickname;
+    chips.appendChild(d);
+  });
+})();
 
-      if (!rx.test(t)) {
-        console.warn(
-          `[NGH][${h.id}][step ${i + 1}] no match found`
-        );
-        ok = false;
-        continue;
-      }
+/* ---- dictionary ---- */
+(function(){
 
-      /* =========================================
-         4) Transforming replace (OBFUSCATE)
-         ========================================= */
-      let finalReplace = repl;
+  const BUILDINGS_BUILTIN = {
+    "1":"Metal Factory","2":"Oil Pump","3":"Metal Storage","4":"Oil Storage","5":"Mine Factory","6":"Power Plant","7":"Storage","8":"Defense Lab","10":"Defense Platform","12":"Aircraft Hangar","13":"Airfield","14":"Command Center","17":"Barricade","19":"Go-Go Bar","22":"Bunker","24":"Light Mine","26":"Academy","28":"Radio Tower","29":"Barracks","30":"War Factory","31":"Tech Center","33":"Stronghold","36":"Drone Silo","37":"Missile Silo","42":"Thorium Vault","46":"Workshop","62":"Rocket Silo","74":"Mercenary Camp","80":"Helipad Delta","86":"Support Graviton Platform","88":"Support Reinforced Platform","111":"Support Armored Platform","118":"Armory","135":"Weapons Lab","144":"Missile Defense","162":"Thorium Mine","169":"Brother's Wrath","207":"Helipad Tango","270":"Reinforced Heavy Platform","272":"2 Bowls of Blood","275":"Support Aerojet Platform","277":"Support Bulwark Platform","278":"Low Wire Entanglement","279":"Dragon's Teeth","280":"Low Wire Entanglement","281":"Dragon's Teeth","283":"Righteous Return","291":"Final Reckoning","295":"Solitude (Survivors)","301":"Shattered Alliance (Corpus)","306":"Fusion Tower","310":"War of Shadows","312":"Smoke and Shadow","313":"Agents of Chaos","315":"Chaos Apocalypse","316":"Thunderstorm","318":"Storm's Eye","319":"Stormchaser","320":"Exiled Honor","321":"Ties That Bind","322":"Sanctuary","323":"Burning Rivalry","324":"Nightmare: Buried Alive","325":"Wargames 3","326":"Thorium Dawn","327":"The Thorium Trail","328":"The Price of Thorium","332":"Day of Ascension","334":"Surfacing Danger","335":"Gemini Rising","336":"Out of the Breach","342":"Wargames IV","345":"Cast The Die","346":"Speak Mayhem And Enter","349":"Mind Fields","350":"Chaos Of The Spotless Mind","356":"Wargames VI","357":"Tactical Backup Bastion","362":"Heavy Graviton Platform","363":"Tactical Ops Center","364":"Airburst Cloud Launcher","365":"Cold Promises","371":"Hostile Conclave","386":"Skyguard","394":"Wolf Packs","396":"Blood Magic","397":"Evil Unearthed","398":"Lazarus Rise","401":"Scorpion Sting","405":"Construction Yard","406":"Agency","428":"Marcus Pearson","431":"Terry Michaels","432":"Dawn Slater","436":"Phillip Brown","443":"Black Widow","444":"Odin's Court","449":"Janelle Brown","454":"The Last Holdout","455":"Starfall","457":"Scirocco","458":"Sven Omarov","459":"Astral Apostate","461":"Planetary Perdition","470":"Dark Omens","471":"Premonition","474":"Echoes","475":"Nightmare: Underworld","476":"Becca Ferguson","477":"Abigail Diaz","478":"Tremors","479":"Epicenter","481":"Silent Night","483":"Fernando Torres","484":"Ignacio Diaz","485":"Aftershock","487":"Ronins","490":"Nightwatch","492":"Western Sun","493":"Redline","496":"Crimson Skies"
+  };
 
-      if (s.transform === "obfuscate") {
-        const anchor = find;
+  const UNITS_BUILTIN = {
+    "2":"Rifleman","3":"Heavy Gunner","4":"Mortar Team","5":"Flamethrower","6":"Sniper","7":"Suicide Bomber","10":"Jackrabbit","11":"Rocket Buggy","12":"Humvee","13":"Razorback","14":"Rhino","15":"Paladin","16":"Challenger","17":"Laser Tank","18":"Flak Tank","21":"Mega Tank","22":"Wing Drones","23":"Copter Drones","24":"Cobra","26":"Thunderbolt","27":"Raptor","28":"Hercules","29":"Gatling Truck","30":"Attack Dog","31":"Warhawk","32":"Hellfire","33":"Kondor","34":"Honey Badger","35":"Shock Trooper","36":"Shock Tank","37":"Colossus","38":"Havoc","39":"Behemoth","40":"Suicide Truck","41":"Stinger","42":"Hellstorm","43":"Artillery","44":"Slayer Drone","45":"Reaper Drone","46":"Flame Assault Vehicle","47":"Vanguard","48":"Gladiator","49":"Griffin","50":"Burner","51":"Skybolt","52":"Peacekeeper","53":"Tomahawk","54":"Valkyrie","55":"Enforcer","56":"Halcyon","57":"Widowmaker","59":"Spectre","60":"Crusader","61":"Corrosion","62":"Shock","63":"Deadeye","64":"Widowmaker X","67":"Viper","68":"Hovertank","69":"Crusader X","70":"Titan","75":"Vanquisher","76":"Widowmaker Prime","77":"Viper X","78":"Banshee","80":"BFG","81":"Marauder","82":"Wrecker","83":"Striker","85":"Wraith","86":"Vanquisher Commander","87":"Hellstorm Commander","88":"Chimera","89":"Hercules Commander","90":"Scorpion","91":"Wraith Commander","92":"Oni Mk. II","93":"Scorcher","94":"Torch","95":"Guardian","96":"Warden","98":"Javelin","99":"Prototype Ronin","117":"Oni","118":"Bullseye","119":"Maverick","120":"Atlas","121":"Hover Tank Commander","122":"BFG X","123":"Ronin","125":"Lead Operator","126":"Operator","127":"Heavy Operator","128":"Sheila","130":"Warhorse","131":"Archangel","133":"Survivor","134":"Kara","135":"Preserver","136":"Lead Preserver","137":"Brother Jeremiah","138":"Phantom","141":"Lead Heavy Operator","142":"Hellhound","143":"Kara","145":"Commando","146":"Lead Commando","147":"Sandstorm","148":"Infiltrator Leader","149":"Infiltrator","150":"Sand Drones","152":"Sarkis","153":"Nightmare","154":"Jackal","156":"Night Owl","158":"Growler","159":"GROWLER DRONE","160":"Cyclone","161":"Toxic Offender","162":"Abandon Ship Drone","163":"Inferno Tank","164":"Ultra Tank","165":"Thunderstorm","166":"EMP","167":"Tempest","168":"Doran","169":"Firefly Drone","173":"Jericho","174":"Nightshade","176":"Sand Drones","178":"Dante","179":"Deena","181":"Hannibal","182":"Legion","183":"Punisher","184":"Baldur","185":"Legion Clone","186":"Hailstorm","187":"Pandora","190":"Titan Wing Drone","191":"Grenadier","193":"Hydra","194":"Lead Grenadier","196":"Howler","197":"Talon","199":"Nimbus","201":"L. Mega Tank","202":"Liberator","212":"Hammer","213":"Detonator","214":"Legendary Hellfire","215":"Legendary Laser Tank","217":"Juggernaut","218":"Malachi","219":"Hades","220":"Apollo","221":"Purifier","222":"Acolyte","224":"Fury","225":"Vindicator","226":"Herald","228":"Roland","229":"Oren","230":"Ardra","232":"Disruptor","233":"Bonesaw","249":"Spartan ZK","251":"Phalanx","257":"War Rig","261":"Valiant","262":"Seeker","270":"Weaver","271":"Nyx","272":"Sunder","285":"War Dog","288":"Blackout","290":"Cyclops","295":"Chaplain","298":"Hornet","299":"Yellowjacket","304":"Technical","310":"Zombie Missile","311":"Siege Squadron","312":"Ravager","313":"Zombie","314":"Walker Zombie","315":"Zombie Boss","316":"Runner Zombie","317":"Rocket Zombie","319":"Resurrected Kane","333":"Drakon","334":"Max","337":"Caretaker","339":"Polly","340":"Breacher","341":"Burnside","343":"Darkstorm","345":"Max","346":"Polly","347":"Burnside","359":"Skipjack","360":"Sphinx","364":"Santiago","366":"Envoy","374":"Prophet","375":"Sharpshooter","377":"Galen","385":"Skipjack","386":"Santiago","387":"Galen","389":"Judge","392":"Kyle","396":"Cerberus","397":"Romero","403":"Neil","408":"Bishop","411":"Gunship","412":"Martin","414":"Mutoto","415":"Zombie Catapult","416":"Flaming Zombie","417":"Kraken","418":"Kyle","419":"Neil","420":"Martin","421":"Leaping Zombie","422":"Nova","428":"Legendary Hellstorm","429":"Legendary Raptor","430":"Escort","431":"Malcolm","434":"Sentry","436":"Andrew","446":"Shepherd","447":"Tony","448":"Lancer","450":"Seraph","452":"Malcolm","453":"Andrew","454":"Tony","456":"Manticore","457":"Rick","459":"Leonard","460":"Annihilator","469":"Screamer","472":"Chopper Company","474":"Legendary BFG","476":"Excavator","477":"Nick","482":"Buzzsaw","483":"Artemis","484":"Executioner","495":"Rick","496":"Leonard","497":"Nick","500":"Denis","501":"Hermes","502":"HIVE","504":"Buzzer","505":"Rumbler","506":"Slasher","507":"Overseer","508":"Luke","510":"Dylan","511":"Ace","512":"Tracker","514":"True Sight","518":"Zombie Squadron","521":"Adam","522":"Denis","523":"Luke","524":"Dylan","528":"Gorgon","530":"Ogre","531":"Mikey","533":"Devout","534":"Braden","537":"Legendary Phantom","540":"Laura","541":"Controller","546":"L.A.V.","550":"Destroyer","555":"Pegasus","560":"Mikey","561":"Braden","562":"Laura","563":"Shadow Sarkis","569":"Absolver","570":"Stormchaser","571":"Ares","572":"Outback","573":"Legendary Hovertank","580":"Twinblade","581":"Alan","582":"Bludgeon","583":"Shredder","584":"Ares","586":"Harpy","587":"Javelin Mk. II","589":"Ronin Mk. II","590":"Oni Mk. III","591":"Akiko","592":"Cardinal","593":"Harbinger","594":"Widowmaker Mk. II","595":"Legendary Raptor","596":"Penance","598":"Legendary Legion","600":"Legion Clone","602":"Aggressor","608":"Matt","609":"Blaze","610":"Singe","611":"Helios","613":"Master Ronin","614":"Bounty Hunter","615":"Dr. Logan","624":"Solrunner","635":"Protect the Cabin!","636":"Bounty Hunter Trap","637":"Rictor","638":"Lightbringer","639":"Bounty Hunter Trap","656":"Bounty Hunter Trap","657":"Proteus","658":"Nemesis","660":"Bounty Hunter Trap","661":"Devin","662":"Echo","663":"Legendary Devout","664":"Devout","671":"Dervish","677":"Dreadnought","680":"Doppler","683":"War Dog","684":"War Dog","685":"War Dog","686":"War Dog","687":"War Dog","688":"War Dog","702":"Legendary Hellhound","703":"Leviathan","704":"Jericho X","706":"Forest","708":"Hoplite","711":"Prototype Leviathan","712":"Templar","715":"Wastelander","718":"Fighter Company","719":"Oni Mk. II","720":"Crucible","721":"Abraham","722":"Detonator","723":"Legendary Titan","725":"Claymore","726":"Prototype Ronin","727":"Prototype Ronin AA","729":"Jenny","731":"Bub","732":"Legion Clone","734":"Fighter Company","735":"Oni Mk. II","740":"Perseus","743":"Kayla","744":"Brawler","745":"Splasher","758":"Oni Mk. II","759":"Oni Mk. II","760":"Morningstar","764":"Phobos","766":"Legendary Rifleman","767":"Legendary Stinger","768":"Sandstorm Mk II","772":"Prototype Perseus","779":"Pathfinder","783":"Orion","784":"Pursuers","787":"Fireteam Delta","793":"Apostle","794":"Oni Mk. II","795":"Oni Mk. II","796":"Legendary Vanquisher","797":"Asmodeus","799":"Jeff","800":"Prototype Asmodeus","801":"Devout","802":"Technical X","803":"Hyperion","805":"Jury","806":"Commandant","807":"Brother Devin","808":"True Devout","813":"Warbarge","814":"Legendary Halcyon","816":"Solar","817":"Janissary","819":"Prototype Warbarge","820":"Arietta","821":"Rhino X","823":"Nox","844":"Legendary Vanguard","848":"Boomer","849":"Karen","851":"Ronin Guard","852":"Echidna","854":"ZEUS","855":"Cruciger","856":"Salvator","863":"Legendary Jackal","865":"Akuma","866":"Kobayashi","869":"Warlord Kali","870":"High Guard","871":"Gunship","872":"Aegis","873":"Inquisitor Cain","874":"Icarus V2","875":"Daedalus","876":"Firehawk","877":"Sarge","878":"Abel","880":"Legendary Warhorse","881":"Annihilator X","882":"Stalker","883":"Warlord Sleipnir","884":"D.A.R.T.","885":"Doctor Hemlock","886":"Legendary Fighter","887":"Scorcher Mk.2","888":"Guardian Mk.2","889":"Bayrak","890":"Krug","891":"Rosie","893":"Warlord Maverick","894":"Diviner","895":"Omen","896":"Legendary Spartan","898":"Legendary Lightbringer","900":"Oni Mk. II","901":"Warlord John","902":"Cosmortar","903":"Gus","904":"Prometheus","905":"Sea Wizard","906":"Admonisher","909":"Canon","910":"Oxford","911":"Centaur","912":"Sagittarius","920":"Warlord Brother Lumos","921":"Ridge Runner","922":"Gravedigger","929":"War Hog","930":"Albert Ross","933":"Lionheart","934":"Richard","935":"Malachi","936":"Legendary Chopper","937":"Landlocke","939":"Warlord Kevin","944":"Nutcracker","945":"Luminary","946":"Lilith","948":"Legendary Chopper","951":"Legendary Ogre","952":"Warlord Jotunn","953":"Jaeger","954":"Schwarz","955":"Cadet","956":"Demi-Demon","957":"Ghost","958":"Osiris","959":"Judicator","960":"Dvorah","961":"Legendary Enshin","962":"Warlord Lady Akiko","965":"Engineer","968":"Z77","969":"Raijin","971":"Legendary Orion","972":"Warlord Harkon","973":"Abyss PMC","974":"Pilgrim","975":"Balthazar","976":"War Wagon","977":"Sledge","978":"Purgator","984":"Legendary Gladiator","985":"Warlord Warfront","990":"Alopex","991":"Layla","993":"Hungry Howard","994":"Sepulcher","995":"Diamondback","996":"Copperhead","997":"Orator","998":"Aquinas","1000":"Legendary Paladin","1001":"Warlord Alexander","1002":"Legendary Bounty Hunter","1003":"Dr. Ache","1004":"Dr. Aegon","1009":"Voltigeur","1011":"War Buggy","1012":"Avery","1016":"Legendary Lancer","1017":"Missionary","1018":"Eve","1019":"R1 Mantis","1022":"Pilum","1023":"Warlord Galahad","1024":"Mars","1025":"Matchlocke","1027":"Moonskater","1028":"Marina","1029":"Meteor Storm","1030":"Legendary Humvee","1035":"Warrior","1036":"Orbiter","1037":"Mojave","1038":"Bombard","1039":"Foxhound","1040":"Legendary Oni Mk. III","1041":"Pioneer","1042":"Kodiak","1044":"Metatron","1046":"Goliath","1047":"Kabuto","1049":"Warlord Ramirez","1050":"Warlord Yamato","1053":"Legendary Sea Ram","1054":"Warlord Seymour","1056":"Macedon","1057":"Crozier","1058":"Ferrula","1059":"Legendary Scorcher","1060":"Siren","1061":"Orpheus","1064":"Warlord Vesuvius","1066":"Tachyon","1067":"Firefly","1068":"Pele","1070":"Bloodfang","1073":"Legendary Tortoise","1074":"Warlord Rize","1075":"Minuet","1076":"Chronophage","1079":"Frostpiercer","1080":"Simo","1084":"Recruiter","1097":"Legendary Laser Tank X","1098":"Warlord Holosight","1099":"Yulebreaker","1100":"Snow Man","1101":"Bearguard","1103":"Eidolon","1104":"Omicron","1109":"Vesper","1110":"Ishara","1111":"Legendary Soldier Drone","1113":"Nomad","1114":"Medjai"
+  };
 
-        // Extract payload (everything BEFORE anchor)
-        if (!repl.endsWith(anchor)) {
-          console.error(
-            `[NGH][${h.id}] obfuscate requires anchor at end of replace`
-          );
-          ok = false;
-          continue;
+  const DICTS = {
+    building: { builtin: BUILDINGS_BUILTIN, key: 'wcBuildingDict_v3', label: 'building', plural: 'Buildings', onlinePrefix: 'War Commander building type ', filename: 'war-commander-building-types.json' },
+    unit:     { builtin: UNITS_BUILTIN,     key: 'wcUnitDict_v1',     label: 'unit',     plural: 'Units',     onlinePrefix: 'War Commander unit type ',     filename: 'war-commander-unit-types.json' }
+  };
+
+  const $ = id => document.getElementById(id);
+
+  function loadCustom(key){
+    try {
+      const raw = JSON.parse(localStorage.getItem(key) || '{}');
+      return (raw && !Array.isArray(raw) && typeof raw === 'object') ? raw : {};
+    } catch { return {}; }
+  }
+
+  let kind = 'building';
+  const customs = { building: loadCustom(DICTS.building.key), unit: loadCustom(DICTS.unit.key) };
+  let editing = null;
+
+  function allTypes(k){ return { ...DICTS[k].builtin, ...customs[k] }; }
+
+  function updateTabCounts(){
+    $('bcount').textContent = Object.keys(allTypes('building')).length;
+    $('ucount').textContent = Object.keys(allTypes('unit')).length;
+  }
+
+  function persist(msg){
+    localStorage.setItem(DICTS[kind].key, JSON.stringify(customs[kind]));
+    $('status').textContent = msg;
+    render();
+    updateTabCounts();
+  }
+
+  /* FIX: this now only touches the dynamic labels (stats, headings, hints, form).
+     Tab buttons are NOT .kind-title anymore, so they stay "Buildings"/"Units" forever. */
+  function setKindLabels(){
+    const d = DICTS[kind];
+    document.querySelectorAll('.kind-name').forEach(el => el.textContent = d.label);
+    document.querySelectorAll('.kind-title').forEach(el => el.textContent = d.plural);
+    $('save').textContent = 'Save ' + d.label;
+    $('search').placeholder = kind === 'building'
+      ? 'Search type ID or building name — e.g. 357, Wall, Barricade'
+      : 'Search type ID or unit name — e.g. 219, Hades, Rifleman';
+  }
+
+  function render(){
+    const q = $('search').value.trim().toLowerCase();
+    const all = allTypes(kind);
+    const builtin = DICTS[kind].builtin;
+    const items = Object.entries(all)
+      .filter(([id,name]) => !q || id.toLowerCase().includes(q) || String(name).toLowerCase().includes(q))
+      .sort((a,b) => a[0].localeCompare(b[0], undefined, { numeric:true }));
+
+    $('count').textContent = Object.keys(all).length;
+    $('results').innerHTML = '';
+
+    if (!items.length) {
+      $('results').innerHTML = `<div class="empty">No ${DICTS[kind].label} matches this search. You can add a new type below.</div>`;
+      return;
+    }
+
+    for (const [id,name] of items) {
+      const row = document.createElement('div'); row.className = 'entry';
+      const typeEl = document.createElement('div'); typeEl.className = 'type'; typeEl.textContent = 'TYPE ' + id;
+      const labelEl = document.createElement('div'); labelEl.className = 'name'; labelEl.textContent = name;
+      const actions = document.createElement('div'); actions.className = 'entry-actions';
+
+      const edit = document.createElement('button');
+      edit.textContent = 'Edit';
+      edit.onclick = () => {
+        editing = id; $('type').value = id; $('name').value = name; $('type').focus();
+        $('save').textContent = 'Update ' + DICTS[kind].label;
+      };
+
+      const del = document.createElement('button');
+      const isBuiltin = Object.hasOwn(builtin, id);
+      del.textContent = isBuiltin ? 'Reset' : 'Delete';
+      del.onclick = () => {
+        if (isBuiltin) {
+          if (confirm('Reset type ' + id + ' to original name: ' + builtin[id] + '?')) {
+            delete customs[kind][id]; persist('Original name restored');
+          }
+        } else if (confirm('Delete type ' + id + ' — ' + name + '?')) {
+          delete customs[kind][id]; persist('Deleted');
         }
+      };
 
-        const payload = repl.slice(0, repl.length - anchor.length);
-
-        // Preview / confirmation popup
-        const proceed = confirm(
-          `[NGH] Obfuscate injected payload?\n\n` +
-          `Hack: ${h.nickname}\n` +
-          `Payload size: ${payload.length} chars`
-        );
-
-        if (!proceed) {
-          ok = false;
-          continue;
-        }
-
-        const obfuscated = simpleObfuscate(payload);
-
-        // Reattach anchor UNOBFUSCATED
-        finalReplace = obfuscated + anchor;
-      }
-
-      /* =========================================
-         5) Apply replace
-         ========================================= */
-      const before = t;
-      t = t.replace(rx, finalReplace);
-
-      if (t === before) {
-        console.warn(
-          `[NGH][${h.id}][step ${i + 1}] replace produced no change`
-        );
-        ok = false;
-        continue;
-      }
-
-    } catch (e) {
-      console.error(
-        `[NGH][${h.id}][step ${i + 1}] exception`,
-        e
-      );
-      ok = false;
+      actions.append(edit, del);
+      row.append(typeEl, labelEl, actions);
+      $('results').append(row);
     }
   }
 
-  return { text: t, ok };
-}
+  document.querySelectorAll('.dict-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const k = btn.dataset.kind;
+      if (k === kind) return;
+      kind = k; editing = null;
+      $('type').value = ''; $('name').value = ''; $('search').value = '';
+      $('status').textContent = 'Saved in this browser';
+      document.querySelectorAll('.dict-tab').forEach(b => b.classList.toggle('active', b === btn));
+      setKindLabels(); render();
+    });
+  });
 
+  $('save').onclick = () => {
+    const id = $('type').value.trim(), name = $('name').value.trim();
+    if (!id || !name) { $('status').textContent = 'Enter both a type ID and ' + DICTS[kind].label + ' name.'; return; }
+    customs[kind][id] = name; editing = null;
+    $('type').value = ''; $('name').value = '';
+    $('save').textContent = 'Save ' + DICTS[kind].label;
+    persist(DICTS[kind].label.charAt(0).toUpperCase() + DICTS[kind].label.slice(1) + ' saved');
+    $('search').value = id; render();
+  };
 
+  $('search').addEventListener('input', render);
 
-/*function runHack(t,h,v){
- let ok=true;
- for(const s of h.steps){
-  try{
-   const rx=s.regex?new RegExp(s.find,s.flags||"g"):new RegExp(s.find.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),"g");
-   if(!rx.test(t)){ok=false;continue}
-   t=t.replace(rx,fill(s.replace,v));
-  }catch{ok=false}
- }
- return{text:t,ok};
-}*/
+  $('online').onclick = () => {
+    const q = $('search').value.trim() || $('type').value.trim();
+    if (!q) { $('status').textContent = 'Enter a type ID or name to search online.'; return; }
+    window.open('https://www.google.com/search?q=' + encodeURIComponent(DICTS[kind].onlinePrefix + q), '_blank', 'noopener');
+  };
 
+  $('export').onclick = () => {
+    const blob = new Blob([JSON.stringify(allTypes(kind), null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = DICTS[kind].filename; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
 
-/*function runHack(t, h, v) {
-  let ok = true;
+  $('import').onclick = () => $('file').click();
 
-  for (let i = 0; i < h.steps.length; i++) {
-    const s = h.steps[i];
-
+  $('file').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
     try {
-      // Resolve placeholders in FIND and REPLACE
-      const findRaw = s.find ?? "";
-      const replRaw = s.replace ?? "";
-      const find = fill(findRaw, v);
-      const repl = fill(replRaw, v);
-
-      // 1) Detect unresolved placeholders early
-      const unresolved = find.match(/\{\{[^}]+\}\}/g);
-      if (unresolved && unresolved.length) {
-        console.warn(
-          `[NGH][${h.id}][step ${i + 1}] FAIL: unresolved placeholders in FIND:`,
-          unresolved,
-          "\nResolved FIND:", find
-        );
-        ok = false;
-        continue;
+      const data = JSON.parse(await f.text());
+      if (!data || Array.isArray(data) || typeof data !== 'object')
+        throw Error('The file must contain a JSON dictionary of type IDs and names.');
+      const builtin = DICTS[kind].builtin;
+      for (const [id, name] of Object.entries(data)) {
+        if (typeof name === 'string' && id.trim() && (!Object.hasOwn(builtin, id) || builtin[id] !== name)) {
+          customs[kind][id] = name;
+        }
       }
+      persist('Dictionary imported');
+    } catch (err) { $('status').textContent = 'Import failed: ' + err.message; }
+    e.target.value = '';
+  };
 
-      // 2) Compile regex (or literal) safely
-      let rx;
-      if (s.regex) {
-        rx = new RegExp(find, s.flags || "g");
-      } else {
-        const escaped = find.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        rx = new RegExp(escaped, "g");
-      }
-
-      // 3) Check match (and show a helpful preview)
-      if (!rx.test(t)) {
-        const preview = find.length > 140 ? find.slice(0, 140) + "..." : find;
-
-        // Helpful: if you were expecting Q/FB, show what they are
-        const varHint = [];
-        if (findRaw.includes("{{Q}}")) varHint.push(`Q=${String(v.Q)}`);
-        if (findRaw.includes("{{FB}}")) varHint.push(`FB=${String(v.FB)}`);
-        if (findRaw.includes("{{PS}}")) varHint.push(`PS=${String(v.PS)}`);
-        if (findRaw.includes("{{PM}}")) varHint.push(`PM=${String(v.PM)}`);
-
-        console.warn(
-          `[NGH][${h.id}][step ${i + 1}] FAIL: no match in file.` +
-          (varHint.length ? ` (${varHint.join(", ")})` : ""),
-          "\nPreview FIND:", preview,
-          "\nregex:", !!s.regex,
-          "flags:", (s.flags || "g")
-        );
-
-        ok = false;
-        continue;
-      }
-
-      // 4) Replace and verify something changed
-      const before = t;
-      t = t.replace(rx, repl);
-
-      if (t === before) {
-        // Very rare, but can happen with odd regex + replacement
-        console.warn(
-          `[NGH][${h.id}][step ${i + 1}] FAIL: matched but produced no change.`,
-          "\nResolved FIND:", find
-        );
-        ok = false;
-        continue;
-      }
-
-      // Success (optional log; comment out if you only want failures)
-      // console.log(`[NGH][${h.id}][step ${i + 1}] OK`);
-
-    } catch (e) {
-      console.error(
-        `[NGH][${h.id}][step ${i + 1}] ERROR: exception while compiling/running step.`,
-        "\nOriginal FIND:", s.find,
-        "\nResolved FIND:", (() => { try { return fill(s.find ?? "", v); } catch { return "<fill failed>"; } })(),
-        "\nError:", e
-      );
-      ok = false;
+  $('clear').onclick = () => {
+    const d = DICTS[kind];
+    const count = Object.keys(d.builtin).length;
+    const msg = count
+      ? `Remove your custom ${d.label} additions and edits? The original ${count} ${d.label} names will remain.`
+      : `Remove all custom ${d.label} entries?`;
+    if (confirm(msg)) {
+      customs[kind] = {}; editing = null;
+      $('type').value = ''; $('name').value = '';
+      $('save').textContent = 'Save ' + d.label;
+      persist('Custom ' + d.label + ' entries cleared' + (count ? '; original database kept' : ''));
     }
-  }
+  };
 
-  return { text: t, ok };
-}*/
+  $('type').addEventListener('keydown', e => { if (e.key === 'Enter') $('name').focus(); });
+  $('name').addEventListener('keydown', e => { if (e.key === 'Enter') $('save').click(); });
 
-
-
-
-document.getElementById("runReplace").onclick=()=>{
- let t=originalCode.value,v=scanVars(t);
- logBody.innerHTML="";
- HARD_CODED_HACKS.forEach((h,i)=>{
-  if(!h.enabled)return;
-  const r=runHack(t,h,v);
-  t=r.text;
-  logBody.innerHTML+=`<tr><td>${i+1}</td><td>${h.nickname} — <span class="${r.ok?"ok":"fail"}">${r.ok?"Applied":"Failed"}</span></td></tr>`;
- });
- modifiedCode.value=t;
- log.style.display="block";
-};
-
-document.getElementById("downloadFile").onclick=()=>{
- const b=new Blob([modifiedCode.value],{type:"application/javascript"});
- const a=document.createElement("a");
- a.href=URL.createObjectURL(b);a.download="WarCommander_1.js";a.click();
-};
-
-// ================= SELF REWRITE =================
-const modal=document.getElementById("hackModal");
-document.getElementById("addHackBtn").onclick=()=>modal.style.display="flex";
-function closeModal(){modal.style.display="none"}
-
-document.getElementById("saveHack").onclick=()=>{
- try{
-  const id=document.getElementById("hackId").value.trim();
-  const name=document.getElementById("hackName").value.trim();
-  if(!id||!name)throw"Missing fields";
-  if(HARD_CODED_HACKS.some(h=>h.id===id))throw"ID already exists";
-  const steps=JSON.parse(document.getElementById("hackSteps").value);
-  const newHack={id,nickname:name,enabled:true,steps};
-
-  const src=originalCode.value||document.documentElement.outerHTML;
-  const updated=[...HARD_CODED_HACKS,newHack];
-  const injected=`// === HARD_CODED_HACKS_START ===
-const HARD_CODED_HACKS = ${JSON.stringify(updated,null,2)};
- // === HARD_CODED_HACKS_END ===`;
-
-  const out=src.replace(/\/\/ === HARD_CODED_HACKS_START ===[\s\S]*?\/\/ === HARD_CODED_HACKS_END ===/,injected);
-
-  const b=new Blob([out],{type:"text/html"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(b);
-  a.download="js_find_replace_final_v6.html";
-  a.click();
-  closeModal();
- }catch(e){alert("Invalid Hack:\n"+e)}
-};
-
-// Render chips
-HARD_CODED_HACKS.forEach(h=>{
- const d=document.createElement("div");
- d.className="chip";
- d.textContent=h.nickname;
- chips.appendChild(d);
-});
+  setKindLabels();
+  updateTabCounts();
+  $('search').value = '357';
+  render();
+})();
 </script>
 </body>
 </html>
