@@ -103755,7 +103755,7 @@ $jscomp['scope'] = {}, $jscomp[a0_0x4be18e(0x35bf)] = !0x1, $jscomp['ASSUME_NO_N
                                 case 0x2b:
                                     _0x8f2cc7 = _0x4366d8['UInt64ToNumber'](_0x556ec4['get_id']()), _0x8f2cc7 = _0xd1afa5['GetUnit'](_0x8f2cc7);
                                     var _0x4006a1 = _0x556ec4['get_boolval1']();
-                                    null != _0x8f2cc7 ? _0x8f2cc7['_stealthRatio'] = _0x4006a1 ? 0x1 : 0x0 : (_0x8f2cc7 = _0x4366d8['UInt64ToNumber'](_0x556ec4['get_id']()), _0x8f2cc7 = _0x4d2de0['GetBuilding'](_0x8f2cc7), null != _0x8f2cc7 && (_0x8f2cc7['_stealthRatio'] = _0x4006a1 ? 0x1 : 0x0));
+                                    null != _0x8f2cc7 ? _0x8f2cc7['_stealthRatio'] = _0x4006a1 ? 0x0 : 0x0 : (_0x8f2cc7 = _0x4366d8['UInt64ToNumber'](_0x556ec4['get_id']()), _0x8f2cc7 = _0x4d2de0['GetBuilding'](_0x8f2cc7), null != _0x8f2cc7 && (_0x8f2cc7['_stealthRatio'] = _0x4006a1 ? 0x1 : 0x0));
                                     break;
                                 case 0x2c:
                                     this[_0xb7cfc5(0x4d09)] = _0x556ec4['get_uintval1'](), this[_0xb7cfc5(0x1195)] = _0x556ec4['get_uintval2']();
@@ -217771,7 +217771,7 @@ $jscomp['scope'] = {}, $jscomp[a0_0x4be18e(0x35bf)] = !0x1, $jscomp['ASSUME_NO_N
                         return 0x0 != this[_0x4bcd08(0x7c12)];
                     },
                     'get_isUncontrollable': function() {
-                        return 0x1 == this['_temporary'];
+                        return 0
                     },
                     'get_isControllable': function() {
                         return 0x1 != this['_temporary'];
@@ -251897,7 +251897,7 @@ $jscomp['scope'] = {}, $jscomp[a0_0x4be18e(0x35bf)] = !0x1, $jscomp['ASSUME_NO_N
                                 null != this['get_mousedOverTile']() && this['attemptSummonPlatoon']();
                                 break;
                             case 0x53:
-                                this['_attackOrScoutRequested'] || null == this['get_mousedOverTile']() || this['performScout'](_0x222cc4['shiftKey']);
+                                this['_attackOrScoutRequested'] || null == this['get_mousedOverTile']() || this.performScout(a.shiftKey);break;case 65:null==this.get_mousedOverTile()||this.confirmAttack();break;case 89:_0x3d6a08['Show'](new _0x343cee());
                         }
                     },
                     'validateUnderAttack': function(_0x524294) {
