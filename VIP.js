@@ -215804,7 +215804,7 @@ $jscomp['scope'] = {}, $jscomp[a0_0x4be18e(0x35bf)] = !0x1, $jscomp['ASSUME_NO_N
                     'isInBattle': function() {
                         var _0x59b05a = _0x8d4601,
                             _0x22f8c7 = _0x8d4601;
-                        if(this['get_isAircraftPlatoon']()) return _0x59af98['instance']['get_IsOwnerAttackerInActiveBattles']();
+                        if(this.get_isAircraftPlatoon())return!1;
                         var _0x292c6d = this[_0x59b05a(0x2598)]();
                         return null == _0x292c6d ? !0x1 : _0x59af98[_0x22f8c7(a0_0x43aa37._0x2f6c85)]['isEntityInBattle'](_0x292c6d['get_entityId']());
                     },
@@ -240297,7 +240297,7 @@ $jscomp['scope'] = {}, $jscomp[a0_0x4be18e(0x35bf)] = !0x1, $jscomp['ASSUME_NO_N
                     'Disband': function() {
                         var _0x436cbf = _0x8d4601,
                             _0x42aca9 = _0x8d4601;
-                        0x0 == this['_platoon']['get_capacityUsed']() ? this['DisbandConfirm']() : 0x0 == this['_platoon']['get_properties']()['get_canDamagedUnitsExit']() && this['_platoon']['hasDamagedUnits']() && !_0x5960d7['get_AllowDamagedPlatoonManagement']() ? _0x4b9dd5['DisplayMessage'](_0x4bab84['getString'](_0x436cbf(0x375b)), _0x4bab84['getString']('widget_body__repair_units_before_disband')) : this['_platoon']['hasDamagedFireteams']() && !_0x5960d7[_0x436cbf(0x5ac0)]() ? _0x4b9dd5['DisplayMessage'](_0x4bab84['getString']('widget_title__repair_fireteams_before_disband'), _0x4bab84['getString'](_0x436cbf(0x6c88))) : _0x3d6a08['Show'](new _0x283c71(_0x4bab84['getString']('common__disband'), _0x4bab84['getString']('widget__disband_platoon_return_to_storage_confirm'), !0x0, _0x4bab84['getString']('common__disband'), _0xc658b1(this, this[_0x436cbf(a0_0x1dea2a._0x356681)])));
+                        0x0 == this['_platoon']['get_capacityUsed']() ? this['DisbandConfirm']() : this['_platoon']['hasDamagedFireteams']() && !_0x5960d7[_0x436cbf(0x5ac0)]() ? _0x4b9dd5['DisplayMessage'](_0x4bab84['getString']('widget_title__repair_fireteams_before_disband'), _0x4bab84['getString'](_0x436cbf(0x6c88))) : _0x3d6a08['Show'](new _0x283c71(_0x4bab84['getString']('common__disband'), _0x4bab84['getString']('widget__disband_platoon_return_to_storage_confirm'), !0x0, _0x4bab84['getString']('common__disband'), _0xc658b1(this, this[_0x436cbf(a0_0x1dea2a._0x356681)])));
                     },
                     'DisbandConfirm': function() {
                         var _0x515806 = _0x8d4601;
