@@ -188489,9 +188489,7 @@ $jscomp[a0_0x11266b(0x31e0)] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp[a0_0x11
                 }, _0x20ab56['startMultiplePurchases'] = function(_0x35532c, _0xb212fa) {
                     var _0x585986 = _0x3f2a00,
                         _0x299e51 = _0x3f2a00;
-                    null == _0xb212fa && (_0xb212fa = !0x1);
-                    if(_0x20ab56['_locked']) _0x3fd2b0['DisplayMessage'](_0x184226['getString']('common_uppercase__error'), _0x184226['getString']('purchase__transaction_pending'));
-                    else {
+                    null == _0xb212fa && (_0xb212fa = !0x1);{
                         null == _0x35532c && (_0x35532c = []);
                         var _0x49e314 = _0xb212fa ? _0x20ab56['_queuedDebugPurchases'] : _0x20ab56['_queuedPurchases'];
                         0x0 < _0x49e314['length'] && (_0x35532c = _0x35532c['concat'](_0x49e314), _0xb212fa ? _0x20ab56['_queuedDebugPurchases'] = [] : _0x20ab56['_queuedPurchases'] = []), 0x0 < _0x35532c[_0x585986(0x1dea)] && (_0x49e314 = _0x5bd49a['instance']['peekRequestId'](), _0x20ab56['lock'](_0x49e314), _0x20ab56[_0x299e51(0x75cb)]['h'][_0x49e314] = !0x0, _0x5bd49a['instance']['startMultiplePurchases'](_0x35532c, _0xb212fa));
@@ -240591,7 +240589,7 @@ $jscomp[a0_0x11266b(0x31e0)] = {}, $jscomp['ASSUME_ES5'] = !0x1, $jscomp[a0_0x11
                     'Disband': function() {
                         var _0x5302f0 = _0x41833c,
                             _0x2a95b1 = _0x41833c;
-                        0x0 == this['_platoon']['get_capacityUsed']() ? this[_0x5302f0(a0_0x3217d9._0x20ff99)]() : 0x0 == this['_platoon'][_0x2a95b1(0x7a5c)]()['get_canDamagedUnitsExit']() && this['_platoon']['hasDamagedUnits']() && !_0x280a06['get_AllowDamagedPlatoonManagement']() ? _0x3fd2b0[_0x2a95b1(0x16bc)](_0x184226['getString']('widget_title__repair_units_before_disband'), _0x184226[_0x2a95b1(0x1370)]('widget_body__repair_units_before_disband')) : this['_platoon']['hasDamagedFireteams']() && !_0x280a06['get_AllowDamagedPlatoonManagement']() ? _0x3fd2b0['DisplayMessage'](_0x184226[_0x5302f0(a0_0x3217d9._0x387d8f)](_0x2a95b1(0x50be)), _0x184226[_0x5302f0(a0_0x3217d9._0x387d8f)]('widget_body__repair_fireteams_before_disband')) : _0x585561['Show'](new _0x555b8a(_0x184226['getString']('common__disband'), _0x184226['getString']('widget__disband_platoon_return_to_storage_confirm'), !0x0, _0x184226[_0x5302f0(a0_0x3217d9._0x5781fd)](_0x2a95b1(0x427b)), _0x36ef96(this, this['DisbandConfirm'])));
+                        0x0 == this['_platoon']['get_capacityUsed']() ? this[_0x5302f0(a0_0x3217d9._0x20ff99)]() : this['_platoon']['hasDamagedFireteams']() && !_0x280a06['get_AllowDamagedPlatoonManagement']() ? _0x3fd2b0['DisplayMessage'](_0x184226[_0x5302f0(a0_0x3217d9._0x387d8f)](_0x2a95b1(0x50be)), _0x184226[_0x5302f0(a0_0x3217d9._0x387d8f)]('widget_body__repair_fireteams_before_disband')) : _0x585561['Show'](new _0x555b8a(_0x184226['getString']('common__disband'), _0x184226['getString']('widget__disband_platoon_return_to_storage_confirm'), !0x0, _0x184226[_0x5302f0(a0_0x3217d9._0x5781fd)](_0x2a95b1(0x427b)), _0x36ef96(this, this['DisbandConfirm'])));
                     },
                     'DisbandConfirm': function() {
                         var _0x332522 = _0x41833c,
